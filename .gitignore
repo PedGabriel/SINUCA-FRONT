@@ -7,14 +7,29 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
+# Dependências
+node_modules/
+
+# Build
+dist/
+dist-ssr/
+dev-dist/
+
+# Cache
+.vite/
+.eslintcache
+*.tsbuildinfo
+
+# Sistema
 .DS_Store
-dist
-dist-ssr
-coverage
+Thumbs.db
+
+# Ambiente
+.env
+.env.*
 *.local
 
-# Editor directories and files
+# Editor / IDE
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -24,16 +39,21 @@ coverage
 *.sln
 *.sw?
 
-*.tsbuildinfo
-
-.eslintcache
+# Testes
+coverage/
+__screenshots__/
 
 # Cypress
 /cypress/videos/
 /cypress/screenshots/
 
-# Vitest
-__screenshots__/
-
 # Vite
 *.timestamp-*-*.mjs
+
+# PWA / Service Worker
+sw.js
+workbox-*.js
+registerSW.js
+
+# Sourcemaps (opcional ignorar)
+*.map
