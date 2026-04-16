@@ -1,5 +1,8 @@
-<template>
+<script setup>
+</script>
 
-<h1>oi</h1>
-    
+<template>
 </template>
+
+<style scoped>
+</style>
