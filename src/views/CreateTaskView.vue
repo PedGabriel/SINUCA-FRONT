@@ -52,27 +52,31 @@ const categories = ref(
     ]
 );
 
-const toogleCategory = (category) => {
-    const index = task.category.indexOf(category)
+const toogleCategory = (categoria) => {
+    const index = task.category.indexOf(categoria.id)
     if(index === -1) {
-        task.category.push(category.id)
+        task.category.push(categoria.id)
+        console.log(task.category)
     }
     else {
         task.category.splice(index, 1);
+        console.log(task.category)
     }
 }
 
 // forma que o backend espera na request
-const task = reactive({
-    title: '',
-    description: '',
-    endDate: '',
-    startDate: '',
-    status: 1,
-    notification: false,
-    category: [],
-    user: [1]
-});
+const task = reactive(
+    {
+        title: '',
+        description: '',
+        endDate: '00-00-0000',
+        startDate: '00-00-0000',
+        status: 1,
+        notification: false,
+        category: [],
+        user: [1]
+    }
+)
 
 const addTask = (task) => {
     taskStore.createTask(task);
@@ -90,15 +94,16 @@ const addTask = (task) => {
                     ></span>
             </div>
 
-            <form @submit.prevent="addTask" class="task-form">
+            <form @submit.prevent="addTask(task)" class="task-form">
                 <AppInput 
                     label="Título"
                     placeholder="Ex: Estudar temas do debate."
                     required
+                    v-model="task.title"
                 />
 
                 <label for="desc" class="label-class">Descrição</label>
-                <textarea id="desc" class="text-area-class" placeholder="Digite a descrição da usa tarefa aqui." />
+                <textarea v-model="task.description" id="desc" class="text-area-class" placeholder="Digite a descrição da usa tarefa aqui." />
 
                 <p class="label-class">Categoria <span style="color: #FD151B;">*</span></p>
                 <div class="categories">
@@ -112,17 +117,46 @@ const addTask = (task) => {
                         <p> <span :class="c.icon"></span> {{ c.name }}</p>
                     </div>
                 </div>
+                <div class="date-row">
+                    <AppInput
+                        v-model="task.startDate"
+                        label="Início"
+                        type="date"
+                        required
+                    />
+
+                    <AppInput
+                        v-model="task.endDate"
+                        label="Fim"
+                        type="date"
+                        required
+                    />
+                </div>
+                <AppButton type="submit">
+                ADICIONAR
+                </AppButton>
             </form>
         </section>
     </main>
 </template>
 
 <style scoped>
+.date-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 1rem;
+}
+
+.date-row > * {
+    flex: 1;
+}
+
 .header-section {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 2rem;
+    cursor: pointer;
 }
 
 .label-class{
