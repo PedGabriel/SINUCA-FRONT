@@ -74,6 +74,7 @@
 
   const addTask = (task) => {
     taskStore.createTask(task)
+    emits('close')
   }
 
   // users
@@ -85,11 +86,6 @@
   onUnmounted(() => {
     document.body.style.overflow = ''
   })
-
-  const closeModal = () => {
-    document.body.style.overflow = ''
-    emits('close')
-  }
   </script>
   <template>
     <main>
