@@ -20,6 +20,15 @@ const router = createRouter({
       component: () => import('../views/DelegationView.vue'),
     },
     {
+      path: '/delegacao/tarefas/:id',
+      component: () => import('../components/delegation/modais/TaskDetailModal.vue'),
+    },
+    {
+      path: '/bem-vindo',
+      name: 'bem-vindo',
+      component: () => import('../views/WelcomeView.vue')
+    },
+    {
       path: '/p',
       name: 'playground',
       component: () => import('../views/playground.vue'),
