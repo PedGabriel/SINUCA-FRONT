@@ -3,34 +3,34 @@ import { reactive, ref } from 'vue'
 
 const tabsNav = reactive([
     {
-        id: 1,
+        id: 0,
         icon: 'mdi mdi-view-grid-outline',
         name: 'Kaban',
     },
     {
-        id: 2,
+        id: 1,
         icon: 'mdi mdi-calendar-month-outline',
         name: 'Cronograma',
     },
     {
-        id: 3,
+        id: 2,
         icon: 'mdi mdi-file-document-outline',
         name: 'Documentos',
     },
     {
-        id: 4,
+        id: 3,
         icon: 'mdi mdi-star-outline',
         name: 'Notas',
     },
 ]);
 
-const isActive = ref(1);
+const isActive = ref(0);
 
 const toogleActive = (id) => {
     if(isActive.value !== id) {
         isActive.value = id
     }
-}
+};
 
 </script>
 
