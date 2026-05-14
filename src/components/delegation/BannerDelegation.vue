@@ -20,7 +20,7 @@ const delegation = reactive({
             </div>
             <p class="official-name">{{ delegation.officialName }}</p>
         </div>
-        <img src="/public/ods-shape.svg" alt="ods-shape" style="width: auto; height: 160px;">
+        <img src="/static/ods-shape.svg" alt="ods-shape" style="width: auto; height: 160px;">
     </section>
 </template>
 

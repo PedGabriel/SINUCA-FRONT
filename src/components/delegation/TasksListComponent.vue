@@ -5,7 +5,6 @@ import { useTaskStore } from '@/stores/taskStore'
 import { useStatusStore } from '@/stores/statusStore'
 import AppButton from '../forms/AppButton.vue'
 
-const router = useRouter();
 
 const taskStore = useTaskStore();
 const statusStore = useStatusStore();
