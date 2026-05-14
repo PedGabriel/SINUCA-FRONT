@@ -7,6 +7,7 @@ import BannerDelegation from '@/components/delegation/BannerDelegation.vue';
 import NavigationComponent from '@/components/delegation/NavigationComponent.vue';
 import TasksListComponent from '@/components/delegation/TasksListComponent.vue';
 import CreatTaskModal from '@/components/delegation/modais/CreatTaskModal.vue';
+import AppTabFooter from '@/components/layout/mobile/AppTabFooter.vue';
 
 const router = useRouter();
 
@@ -40,6 +41,8 @@ const closeModal = () => {
             @close="closeModal"
         />
     </main>
+    <AppTabFooter 
+    />
 </template>
 
 <style scoped>
