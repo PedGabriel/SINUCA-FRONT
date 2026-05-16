@@ -43,7 +43,7 @@ const options = [
                 :style="opt.border"
             >   
                 <span :class="opt.icon" :style="opt.iconColor"></span>
-                <h3 style="font-weight: 500;">{{ opt.title }}</h3>
+                <h3 style="font-weight: bold;">{{ opt.title }}</h3>
                 <p>{{ opt.desc }}</p>
             </li>
         </ul>
@@ -79,12 +79,14 @@ const options = [
 }
 
 .option-item {
-    background-color: white;
-    padding: 2rem 0.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(9px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 2rem 0.8rem;
     border-radius: 10px;
     box-shadow:  0 -1px 10px rgba(0, 0, 0, 0.6);
     transition: all .2s;
-    width: 60%;
+    width: 50%;
     margin: 0 auto;
 
 }
