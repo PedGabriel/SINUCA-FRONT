@@ -1,5 +1,10 @@
 <script setup>
+import { useUserStore } from '@/stores/userStore';
+import { useRouter } from 'vue-router';
 import LogoAzul from '/logo-azul.svg'
+
+const router = useRouter();
+const userStore = useUserStore();
 
 const options = [
     {
@@ -7,7 +12,7 @@ const options = [
         icon: "mdi mdi-crown-outline", 
         title: "Organizador", 
         desc: "Gerencie o evento e controle as atividades.",
-        iconColor: "color: #849324",
+        color: "#849324",
         border: "border: 2px solid #849324",
     },
     {
@@ -15,7 +20,7 @@ const options = [
         icon: "mdi mdi-account-outline", 
         title: "Discente", 
         desc: "Represente seu país e participe das tarefas.",
-        iconColor: "color: #FFB30F",
+        color: "#FFB30F",
         border: "border: 2px solid #FFB30F",
     },
     {
@@ -23,11 +28,19 @@ const options = [
         icon: "mdi mdi-star-outline", 
         title: "Avaliador", 
         desc: "Avalie as delegações e seu desempenho.",
-        iconColor: "color: #FD151B",
+        color: "#FD151B",
         border: "border: 2px solid #FD151B",
     },
 ]
 
+const selectUserType = ((title, icon, color) => {
+    userStore.userType = title
+
+    router.push({
+        path: '/login',
+        query: { title, icon, color }
+    })
+})
 </script>
 
 <template>
@@ -41,8 +54,9 @@ const options = [
                 :key="opt.id"
                 class="option-item"
                 :style="opt.border"
+                @click="selectUserType(opt.title, opt.icon, opt.color)"
             >   
-                <span :class="opt.icon" :style="opt.iconColor"></span>
+                <span :class="opt.icon" :style="`color: ${opt.color}`"></span>
                 <h3 style="font-weight: bold;">{{ opt.title }}</h3>
                 <p>{{ opt.desc }}</p>
             </li>
@@ -63,9 +77,9 @@ const options = [
     background-size: cover;
     background-position: center;
 }
-
+    
 .subtitle{
-    width: 67%;
+    width: 65%;
     color: #969696;
     margin: 0.5rem auto;
 }
@@ -79,14 +93,13 @@ const options = [
 }
 
 .option-item {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(9px);
-    -webkit-backdrop-filter: blur(10px);
+    background: #F6F6F2;
     padding: 2rem 0.8rem;
     border-radius: 10px;
     box-shadow:  0 -1px 10px rgba(0, 0, 0, 0.6);
     transition: all .2s;
-    width: 50%;
+    width: 45%;
+    height: 110px;
     margin: 0 auto;
 
 }
