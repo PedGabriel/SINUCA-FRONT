@@ -5,11 +5,13 @@ import UserService from '../services/userService';
 
 const userService = new UserService();
 
+
 export const useUserStore = defineStore('auth', () => {
   const user = ref({});
   const loggedIn = ref(false);
-  const usuarios = ref([]);
-  const carregando = ref(false);
+  const users = ref([]);
+  const loading = ref(false);
+  const userType = ref('');
 
   const login = async (email, password) => {
     const data = await userService.login(email, password);
@@ -44,17 +46,17 @@ export const useUserStore = defineStore('auth', () => {
   }
 
   async function getAllUsers() {
-    carregando.value = true;
+    loading.value = true;
     try {
           const data = await userService.getUsers();
-          usuarios.value = data.results;
+          users.value = data.results;
 
     } finally {
-      carregando.value = false;
+      loading.value = false;
     }
   }
   return {
-    user, loggedIn, usuarios, carregando,
-    login, register, logout, checkAuth, getAllUsers
+    user, loggedIn, users, loading,
+    login, register, logout, checkAuth, getAllUsers, userType
   };
 });

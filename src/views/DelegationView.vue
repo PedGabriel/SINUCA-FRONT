@@ -1,6 +1,7 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/userStore';
 
 import AppHeaderMob from '@/components/layout/mobile/AppHeaderMob.vue';
 import BannerDelegation from '@/components/delegation/BannerDelegation.vue';
@@ -10,7 +11,6 @@ import CreatTaskModal from '@/components/delegation/modais/CreatTaskModal.vue';
 import AppTabFooter from '@/components/layout/mobile/AppTabFooter.vue';
 
 const router = useRouter();
-
 const activeModal = ref(null);
 
 
@@ -23,6 +23,7 @@ const closeModal = () => {
     activeModal.value = null
     router.push('/delegacao')
 };
+
 </script>
 
 <template>
