@@ -1,15 +1,15 @@
 <script setup>
 import { useTaskStore } from '../stores/taskStore'
-const taskStore = useTaskStore()
-import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-const router = useRouter()
-
+import { ref, onMounted } from 'vue'
 import { useUserStore } from '@/stores/userStore'
-const userStore = useUserStore();
-
 import { usePostStore } from '@/stores/postStore'
-const postStore = usePostStore()
+
+const router = useRouter();
+
+const taskStore = useTaskStore();
+const userStore = useUserStore();
+const postStore = usePostStore();
 
 
 onMounted(() => {
