@@ -4,12 +4,14 @@ import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import { usePostStore } from '@/stores/postStore'
+import { useGangStore } from '@/stores/gangStore'
 
 const router = useRouter();
 
 const taskStore = useTaskStore();
 const userStore = useUserStore();
 const postStore = usePostStore();
+const gangStore = useGangStore()
 
 
 onMounted(() => {
@@ -23,6 +25,10 @@ onMounted(() => {
 
 onMounted(() => {
     postStore.getPosts()
+})
+
+onMounted(() => {
+    gangStore.getGangs()
 })
 
 const novaTask = ref(
@@ -89,6 +95,14 @@ const Password = ref('')
     <h2>Usuários:</h2>
     <div v-for="u in userStore.usuarios" :key="u.id">
         <p>{{ u.email }}</p>
+    </div>
+</div>
+<br><br><br>
+<div>
+    <h2>Gangs:</h2>
+    <div v-for="g in gangStore.gangs" :key="g.id" class="gang">
+        <p>{{ g.name }}</p>
+        <p>{{ g.courses }}</p>
     </div>
 </div>
 </template>
