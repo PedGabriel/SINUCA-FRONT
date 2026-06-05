@@ -7,7 +7,14 @@ const userService = new UserService();
 
 
 export const useUserStore = defineStore('auth', () => {
-  const user = ref({});
+  const user = ref({
+    email: "",
+    name: "",
+    password: "",
+    foto: 0,
+    gang: 0,
+    matriculation: "",
+  });
   const loggedIn = ref(false);
   const users = ref([]);
   const loading = ref(false);

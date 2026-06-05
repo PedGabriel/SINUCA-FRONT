@@ -12,7 +12,7 @@ export default class UserService {
   }
 
   async register(email, name, password) {
-    const response = await axios.post('/registro/', { email, name, password });
+    const response = await axios.post('/registro/', { email, name, password, gang, matriculation });
     return response.data;
   }
 
