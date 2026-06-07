@@ -3,8 +3,13 @@ import { ref, computed } from 'vue';
 import { useUserStore } from '@/stores/userStore.js';
 import AppButton from './AppButton.vue';
 import AppInput from './AppInput.vue';
+import { useRouter } from 'vue-router';
 
 const userStore = useUserStore();
+const router = useRouter();
+
+const loading = ref(false)
+const errorMessage = ref('')
 
 const props = defineProps({
   userId: String,
@@ -13,13 +18,32 @@ const props = defineProps({
   userColor: String,
 });
 
+
 const requirements = computed(() => {
   return [
     { requirement: 'Digite uma matrícula válida', valid: userStore.user.matriculation.length < 10 || userStore.user.matriculation.length > 10 || !/^[0-9]+$/.test(userStore.user.matriculation)}
   ]
 });
 
+const imgPreview = ref(null);
 const focusMatriculation = ref(false);
+
+async function onFileChange(event) {
+  const file = event?.target?.file?.[0];
+  if(!file) return;
+
+  imgPreview.value = URL.createObjectURL(file);
+
+  try {
+    loading.value = true
+    const response = await userStore.uploadImage(file);
+    userStore.user.foto = response.data.id;
+  } catch (err) {
+    errorMessage.value = 'Erro ao fazer upload de imagem'
+  } finally  {
+    loading.value = false
+  }
+}
 
 async function register() {
     loading.value = true
@@ -49,6 +73,24 @@ async function register() {
       </div>
 
       <form @submit.prevent="register" class="forms">
+
+        <div class="avatar-upload-section">
+          <div class="avatar-preview" :style="`border-color: ${props.userColor}`">
+            <img v-if="imgPreview" :src="imgPreview" alt="Preview da foto" />
+            <span v-else class="mdi mdi-account-camera-outline" :style="`color: ${props.userColor}`"></span>
+          </div>
+          <label for="file-input" class="upload-btn" :style="`background-color: ${props.userColor || '#002453'}`">
+            <span class="mdi mdi-upload"></span> Selecionar Foto
+          </label>
+          <input 
+            id="file-input" 
+            type="file" 
+            accept="image/*" 
+            @change="onFileChange" 
+            style="display: none;" 
+          />
+        </div>
+
           <AppInput 
             v-model="userStore.user.name"
             label="Nome Completo"

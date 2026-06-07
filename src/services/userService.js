@@ -11,8 +11,8 @@ export default class UserService {
     return response.data;
   }
 
-  async register(email, name, password) {
-    const response = await axios.post('/registro/', { email, name, password, gang, matriculation });
+  async register(email, name, password, gang, matriculation, foto) {
+    const response = await axios.post('/registro/', { email, name, password, gang, matriculation, foto });
     return response.data;
   }
 
@@ -25,4 +25,13 @@ export default class UserService {
     const {data} = await axios.get('/usuarios/');
     return data;
   }
-}
+
+  uploadImage(file, description) {
+    const formData = new FormData();
+    formData.append('file', file);
+    if(description) formData.append('description', description);
+    return axios.post('media/images/', formData, {
+      headers: { 'Content-Type': 'multipart/form-data'},
+    });
+  }
+};

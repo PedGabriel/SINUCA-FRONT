@@ -28,8 +28,8 @@ export const useUserStore = defineStore('auth', () => {
     loggedIn.value = true;
   }
 
-  async function register(email, name, password) {
-    await userService.register(email, name, password);
+  async function register(email, name, password, gang, matriculation, foto) {
+    await userService.register(email, name, password, gang, matriculation, foto);
     await login(email, password);
   }
 
