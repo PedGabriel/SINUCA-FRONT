@@ -9,12 +9,14 @@ const props = defineProps({
     required: Boolean,
 });
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'focus', 'blur']);
 
 const value = computed({
     get: () => props.modelValue,
     set: (val) => emit('update:modelValue', val)
-})
+});
+
+
 </script>
 
 <template>
@@ -29,6 +31,8 @@ const value = computed({
             :placeholder="placeholder"
             :required="required"
             class="input-class"
+            @focus="$emit('focus')"
+            @blur="$emit('blur')"
         >
     </div>
 
