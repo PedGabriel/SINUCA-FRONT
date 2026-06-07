@@ -18,7 +18,7 @@ export const useUserStore = defineStore('auth', () => {
   const loggedIn = ref(false);
   const users = ref([]);
   const loading = ref(false);
-  const userType = ref('');
+  const userType = ref();
 
   const login = async (email, password) => {
     const data = await userService.login(email, password);
