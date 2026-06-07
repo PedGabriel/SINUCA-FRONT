@@ -25,13 +25,4 @@ export default class UserService {
     const {data} = await axios.get('/usuarios/');
     return data;
   }
-
-  uploadImage(file, description) {
-    const formData = new FormData();
-    formData.append('file', file);
-    if(description) formData.append('description', description);
-    return axios.post('media/images/', formData, {
-      headers: { 'Content-Type': 'multipart/form-data'},
-    });
-  }
 };
