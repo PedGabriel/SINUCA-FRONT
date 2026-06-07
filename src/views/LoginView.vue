@@ -53,7 +53,7 @@ async function login() {
             <button @click="router.back()" class="back-btn">
                 <span class="mdi mdi-arrow-left-thin"></span>
             </button>
-            <img :src="LogoAzul" alt="logo do SINUCA azul">
+            <img :src="LogoAzul" alt="logo do SINUCA azul" style="width: auto; height: 40px">
         </header>
         <section class="login-section">
     
@@ -89,6 +89,11 @@ async function login() {
                     </div>
                     <p class="error-message" v-if="errorMessage">{{ errorMessage }}</p>
                     <AppButton type="submit">ENTRAR</AppButton>
+                    <RouterLink :to="{
+                        path: '/cadastro',
+                        query: route.query }" >
+                        Novo no SINUCA? Clique Aqui.
+                    </RouterLink>
                 </form>
             </div>
         </section>
@@ -107,15 +112,14 @@ async function login() {
 .header-section {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-top: 1.5rem;
 }
 
 .back-btn {
-    background-color: #EBEBEB;
+    background-color: inherit;
     border: none;
-    padding: 1rem;
-    font-size: 1.6rem;
-    border-radius: 10px;
+    font-size: 2.5rem;
 }
 
 .section-title {
@@ -183,5 +187,12 @@ async function login() {
 
 .error-message {
     color: #FD151B;
+}
+
+a {
+    text-align: center;
+    margin-top: 1rem;
+    color: #437F97;
+    text-decoration: underline;
 }
 </style>

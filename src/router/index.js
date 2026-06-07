@@ -38,6 +38,11 @@ const router = createRouter({
       component: () => import('../views/LoginView.vue')
     },
     {
+      path: '/cadastro',
+      name: 'cadastro',
+      component: () => import('../views/RegisterView.vue')
+    },
+    {
       path: '/p',
       name: 'playground',
       component: () => import('../views/playground.vue'),
