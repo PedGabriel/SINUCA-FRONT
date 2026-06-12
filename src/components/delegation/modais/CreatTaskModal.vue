@@ -144,12 +144,12 @@ onUnmounted(() => {
         <div class="user-select">
           <div
             class="user-option"
-            v-for="user in userStore.usuarios"
+            v-for="user in userStore.users"
             :key="user.id"
             @click="toggleUser(user.id)"
             :class="{ selected: task.user.includes(user.id) }"
           >
-            <img :src="user.foto?.url" />
+            <img :src="user.foto.url" />
             <span>{{ user.name  }}</span>
           </div>
         </div>

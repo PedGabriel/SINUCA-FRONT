@@ -93,7 +93,7 @@ const Password = ref('')
 <br>
 <div>
     <h2>Usuários:</h2>
-    <div v-for="u in userStore.usuarios" :key="u.id">
+    <div v-for="u in userStore.users" :key="u.id">
         <p>{{ u.email }}</p>
     </div>
 </div>
