@@ -1,3 +1,6 @@
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
+
 import LinkService from '../services/linkService'
 
 const linkService = new LinkService()
@@ -8,6 +11,7 @@ export const useLinkStore = defineStore('link', () => {
     const link = ref({
         name: '',
         url: '',
+        country: 0,
     });
     
     const loading = ref(false);

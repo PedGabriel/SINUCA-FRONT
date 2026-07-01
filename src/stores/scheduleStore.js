@@ -1,6 +1,9 @@
-import ScheduleStore from './ScheduleStore';
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
 
-const scheduleStore = new ScheduleStore();
+import ScheduleService from '../services/scheduleService' 
+
+const scheduleService = new ScheduleService();
 
 export const useScheduleStore = defineStore('schedule', () => {
     
@@ -12,6 +15,7 @@ export const useScheduleStore = defineStore('schedule', () => {
         endDate: '',
         location: '',
         description: '',
+        country: 0,
     });
     
     const loading = ref(false);
@@ -19,7 +23,7 @@ export const useScheduleStore = defineStore('schedule', () => {
     async function getSchedules() {
         loading.value = true;
         try {
-            const data = await scheduleStore.getSchedules();
+            const data = await scheduleService.getSchedules();
             schedules.value = data.results;
         } finally {
             loading.value = false;
@@ -27,16 +31,16 @@ export const useScheduleStore = defineStore('schedule', () => {
     }
 
     async function getSchedule(id) {
-        schedule.value = await scheduleStore.getSchedule(id);
+        schedule.value = await scheduleService.getSchedule(id);
     }
 
     async function createSchedule(newSchedule) {
-        const createdSchedule = await scheduleStore.createSchedule(newSchedule);
+        const createdSchedule = await scheduleService.createSchedule(newSchedule);
         schedules.value.push(createdSchedule);
     }
 
     async function updateSchedule(id, updatedSchedule) {
-        const updated = await scheduleStore.updateSchedule(id, updatedSchedule);
+        const updated = await scheduleService.updateSchedule(id, updatedSchedule);
         const index = schedules.value.findIndex(t => t.id === id);
         if (index !== -1) {
             schedules.value[index] = updated;
@@ -44,7 +48,7 @@ export const useScheduleStore = defineStore('schedule', () => {
     }
     
     async function deleteSchedule(id) {
-        await scheduleStore.deleteSchedule(id);
+        await scheduleService.deleteSchedule(id);
         schedules.value = schedules.value.filter(t => t.id !== id);
     }
 
