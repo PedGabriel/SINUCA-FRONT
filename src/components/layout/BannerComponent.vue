@@ -1,24 +1,23 @@
 <script setup>
-// No momento esta estático, mas vai consumir a API de delegação no banco
-import { reactive } from 'vue';
-
-
-const delegation = reactive({
-    name: 'Colômbia',
-    officialName: 'República da Colômbia',
-    flag: '/colombia-flag.svg'
+const props = defineProps({
+    title: {
+        type: String,
+        default: 'Título Banner'
+    },
+    icon: String,
+    subtitle: String,
+    CountryFlagUrl: String, 
 });
-
 </script>
 
 <template>
     <section class="banner">
-        <div class="delegation-name">
+        <div class="title-area">
             <div style="display: flex; gap: 1rem; align-items: center;">
-                <h2 class="name">{{ delegation.name }}</h2>
-                <img :src="delegation.flag" :alt="delegation.name">
+                <h2 class="title">{{ title }}</h2>
+                <img class="country-flag" v-if="CountryFlagUrl" :src="CountryFlagUrl" :alt="title">
             </div>
-            <p class="official-name">{{ delegation.officialName }}</p>
+            <p class="subtitle">{{ subtitle }}</p>
         </div>
         <img src="/static/ods-shape.svg" alt="ods-shape" style="width: auto; height: 160px;">
     </section>
@@ -33,18 +32,23 @@ const delegation = reactive({
     background-color: #fff;
 }
 
-.delegation-name {
+.title-area {
 
     padding: 1em;
 
-    & .name {
+    & .title {
         font-weight: bold;
     }
 
-    & .official-name {
+    & .subtitle {
         color: #969696;
         margin-top: 0.5rem;
     }
+}
+
+.country-flag {
+    width: 35px;
+    height: auto;
 }
 
 </style>
