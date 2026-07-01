@@ -14,6 +14,7 @@ export const useUserStore = defineStore('auth', () => {
     foto: null,
     gang: null,
     matriculation: '',
+    country: { id: null },
   })
   const loggedIn = ref(false)
   const users = ref([])
