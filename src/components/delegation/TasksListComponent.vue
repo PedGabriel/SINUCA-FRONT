@@ -32,7 +32,7 @@ onMounted(() => {
                 <span class="count-task"> {{ statusStore.toDo.length }} </span>
             </h5>
             <ul v-if="statusStore.toDo.length > 0">
-                <li v-for="task in statusStore.toDo" class="task-card">
+                <li v-for="task in statusStore.toDo" :key="task.id" class="task-card">
                     <h3>{{ task.title }}</h3>
                     <p v-for="c in task.category" :key="c.id" style="color: #969696">{{ c.name }}</p>
                 </li>
@@ -45,7 +45,7 @@ onMounted(() => {
                 <span class="count-task"> {{ statusStore.doing.length }} </span>
             </h5>
             <ul v-if="statusStore.doing.length > 0">
-                <li v-for="task in statusStore.doing" class="task-card">
+                <li v-for="task in statusStore.doing" :key="task.id" class="task-card">
                     <h3>{{ task.title }}</h3>
                     <p v-for="c in task.category" :key="c.id" style="color: #969696">{{ c.name }}</p>
                 </li>
@@ -58,7 +58,7 @@ onMounted(() => {
                 <span class="count-task"> {{ statusStore.doing.length }} </span>
             </h5>
             <ul v-if="statusStore.doing.length > 0">
-                <li v-for="task in statusStore.doing" class="task-card">
+                <li v-for="task in statusStore.doing" :key="task.id" class="task-card">
                     <h3 >{{ task.title }}</h3>
                     <p v-for="c in task.category" :key="c.id" style="color: #969696">{{ c.name }}</p>
                 </li>

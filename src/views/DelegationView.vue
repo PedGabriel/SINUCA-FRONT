@@ -16,6 +16,8 @@ const countryStore = useCountryStore();
 const userStore = useUserStore();
 const countryId = ref();
 
+const activeTab = ref(0);
+
 const router = useRouter();
 const activeModal = ref(null);
 
@@ -44,10 +46,16 @@ onMounted (() => {
             :subtitle="countryStore.country?.political_name"
             :-country-flag-url="countryStore.country?.flag?.url"
         />
-        <NavigationComponent />
-        <TasksListComponent 
+        <NavigationComponent 
+            @change-tab="activeTab = $event"
+        />
+        
+        <TasksListComponent v-if="activeTab === 0"
             @open-form="openTaskForm"
         />
+        <div v-if="activeTab===1">
+            <h1>Cronograma</h1>
+        </div>
 
         <!-- MODAL -->
 
