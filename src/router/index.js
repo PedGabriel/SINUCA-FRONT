@@ -43,6 +43,18 @@ const router = createRouter({
       component: () => import('../views/RegisterView.vue')
     },
     {
+      path: '/chat',
+      name: 'chat',
+    },
+    {
+      path: '/historia',
+      name: 'histora',
+    },
+    {
+      path: '/mural',
+      name: 'mural',
+    },
+    {
       path: '/p',
       name: 'playground',
       component: () => import('../views/playground.vue'),
