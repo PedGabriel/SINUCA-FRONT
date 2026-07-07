@@ -75,6 +75,7 @@ watch(medidor, () => {
     justify-content: center;
     gap: 0.6rem;
     padding: 2rem 0;
+    height: 3rem;
     position: relative;
 }
 
@@ -88,6 +89,7 @@ watch(medidor, () => {
 .tabs-navigation li {
     display: flex;
     gap: 0.5rem;
+    font-size: 1rem;
 }
 
 .tab-item {
@@ -98,18 +100,22 @@ watch(medidor, () => {
     background-color: #F8F8FF;
     font-weight: bold;
     color: #01295F;
-    padding: 1rem;
     border-radius: 10px;
+    transition: all .3s ease-in-out;
+}
+
+.active:active {
+    transform: scale(0.95);
 }
 
 span.mdi-chevron-left {
     position: absolute;
-    left: 0.8rem;
+    left: 1rem;
 }
 
 span.mdi-chevron-right {
     position: absolute;
-    right: 0.8rem;
+    right: 1rem;
 }
 
 </style>

@@ -11,6 +11,7 @@ import NavigationComponent from '@/components/delegation/NavigationComponent.vue
 import TasksListComponent from '@/components/delegation/TasksListComponent.vue';
 import CreatTaskModal from '@/components/delegation/modais/CreatTaskModal.vue';
 import AppTabFooter from '@/components/layout/mobile/AppTabFooter.vue';
+import ScheduleListComponent from '@/components/delegation/ScheduleListComponent.vue';
 
 const countryStore = useCountryStore();
 const userStore = useUserStore();
@@ -53,9 +54,10 @@ onMounted (() => {
         <TasksListComponent v-if="activeTab === 0"
             @open-form="openTaskForm"
         />
-        <div v-if="activeTab===1">
-            <h1>Cronograma</h1>
-        </div>
+        <ScheduleListComponent v-if="activeTab === 1" 
+            
+        />
+
 
         <!-- MODAL -->
 
