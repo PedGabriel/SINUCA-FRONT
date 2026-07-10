@@ -52,7 +52,6 @@ onMounted(() => {
                         >   
                             <p>
                                 <span :class="categoryStore.getCategoryActive(c.id).icon"></span>
-                                {{ c.name }}
                             </p>
                         </div>
                     </div>
@@ -68,7 +67,7 @@ onMounted(() => {
             <ul v-if="statusStore.doing.length > 0">
                 <li v-for="task in statusStore.doing" class="task-card" @click="openTask(task.id)">
                     <h3>{{ task.title }}</h3>
-                    <p>Clique para editar.</p>
+                    <p style="color: #969696;">Clique para editar.</p>
                     <div class="task-categories">
                         <div
                             v-for="c in task.category"
@@ -78,7 +77,6 @@ onMounted(() => {
                         >   
                             <p>
                                 <span :class="categoryStore.getCategoryActive(c.id).icon"></span>
-                                {{ c.name }}
                             </p>
                         </div>
                     </div>
@@ -89,12 +87,12 @@ onMounted(() => {
             <!-- tarefas concluídas -->
             <h5 style="color: #849324">
                 CONCLUÍDO
-                <span class="count-task"> {{ statusStore.doing.length }} </span>
+                <span class="count-task"> {{ statusStore.done.length }} </span>
             </h5>
-            <ul v-if="statusStore.doing.length > 0">
-                <li v-for="task in statusStore.doing" class="task-card" @click="openTask(task.id)">
+            <ul v-if="statusStore.done.length > 0">
+                <li v-for="task in statusStore.done" class="task-card" @click="openTask(task.id)">
                     <h3 >{{ task.title }}</h3>
-                    <p>Clique para ver detalhes ou editar a tarefa.</p>
+                    <p style="color: #969696;">Clique para editar.</p>
                     <div class="task-categories">
                         <div
                             v-for="c in task.category"
@@ -104,7 +102,6 @@ onMounted(() => {
                         >   
                             <p>
                                 <span :class="categoryStore.getCategoryActive(c.id).icon"></span>
-                                {{ c.name }}
                             </p>
                         </div>
                     </div>
@@ -159,7 +156,7 @@ onMounted(() => {
 
 .task-card h3 {
     font-size: 1.2rem;
-    max-width: 70%;
+    max-width: 90%;
     word-break: break-word;
 }
 
