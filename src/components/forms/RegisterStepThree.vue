@@ -1,12 +1,14 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { useGangStore } from '@/stores/gangStore.js'
 import { useUserStore } from '@/stores/userStore.js'
 import AppButton from './AppButton.vue'
 import AppInput from './AppInput.vue'
 import { useRouter } from 'vue-router'
 
-const userStore = useUserStore()
-const router = useRouter()
+const userStore = useUserStore();
+const gangStore = useGangStore();
+const router = useRouter();
 
 const loading = ref(false);
 const errorMessage = ref('');
@@ -68,6 +70,10 @@ async function register() {
     loading.value = false
   }
 }
+
+onMounted(() => {
+  gangStore.getGangs()
+});
 </script>
 
 <template>
@@ -78,10 +84,6 @@ async function register() {
     </div>
 
     <div class="forms-container">
-      <div class="forms-header" :style="`color: ${props.userColor}`">
-        <span :class="props.userIcon"></span>
-        <h2>{{ props.userType }}</h2>
-      </div>
 
       <form @submit.prevent="register" class="forms">
         <div class="image-section">
@@ -117,10 +119,24 @@ async function register() {
           @blur="focusMatriculation = false"
           required
         />
-        <span style="color: #fd151b" v-if="requirements[0].valid && focusMatriculation">
+
+        <span style="color: #fd151b; margin-bottom: 1rem;" v-if="requirements[0].valid && focusMatriculation">
           <span class="mdi mdi-alert-circle-outline" />
           {{ requirements[0].requirement }}</span
         >
+        <div class="class-area">
+          <label for="class" class="label-class">Turma</label>
+          <select class="select-class" v-model="userStore.user.gang">
+            <option
+              v-for="c in gangStore.gangs"
+              :key="c.id"
+              :value="c.id"
+              name="class" 
+              class="option-class"
+            >{{ c.name }}</option>
+          </select>
+        </div>
+
         <AppButton type="submit">CADASTRAR</AppButton>
       </form>
     </div>
@@ -151,7 +167,7 @@ async function register() {
 }
 
 .container-component {
-  height: 70vh;
+  height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -213,4 +229,35 @@ async function register() {
   color: #999;
   font-size: 2rem;
 }
+
+.label-class {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.select-class {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: 2px solid #D9D9D9;
+  border-radius: 5px;
+  outline: none;
+}
+
+.select-class::picker-icon {
+  color: #9999;
+  transition: .4s rotate;
+}
+
+.select-class:open::picker-icon {
+  rotate: 180deg;
+}
+
+.select-class option {
+  border: 1px solid #d7d7d7;
+  padding: 6px;
+  transition: .4s;
+}
+
+
+
 </style>

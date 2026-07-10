@@ -23,8 +23,8 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
-      path: '/delegacao/tarefas/:id',
-      component: () => import('../components/delegation/modais/TaskDetailModal.vue'),
+      path: '/delegacao/tarefas/:id/editar',
+      component: () => import('../views/DelegationView.vue'),
       meta: { requiresAuth: true },
     },
     {
