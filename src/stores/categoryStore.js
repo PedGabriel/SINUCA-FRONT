@@ -3,19 +3,32 @@ import { ref } from "vue";
 
 import CategoryService from "@/services/categoryService";
 
-const CategoryService = new CategoryService();
+const categoryService = new CategoryService();
 
-export const CategoryStore = defineStore('categoria', () => {
-    const categorys = ref([]);
+export const UseCategoryStore = defineStore('categoria', () => {
+    const categories = ref([]);
     const category = ref();
-
     const loading = ref(false);
 
-    async function getCategorys() {
+    const categoriesStyle = {
+        2: { icon: 'mdi mdi-book-open-page-variant-outline', activeStyle: 'background-color: #FFB30F;', },
+        3: { icon: 'mdi mdi-forum-outline', activeStyle: 'background-color: #01295F;',},
+        4: { icon: 'mdi mdi-instagram', activeStyle: 'background-color: #FD151B;', },
+        5: { icon: 'mdi mdi-handshake-outline', activeStyle: 'background-color: #849324;', },
+        6: { icon: 'mdi mdi-drama-masks', activeStyle: 'background-color: #FFB30F;',},
+        7: { icon: 'mdi mdi-dots-horizontal', activeStyle: 'background-color: #01295F;',}
+    }
+
+    function getCategoryActive(id){
+        return categoriesStyle[id]
+    }
+
+
+    async function getCategories() {
         loading.value = true
         try {
-            const data = await CategoryService.getAllCategorys()
-            categorys.value = data.results;
+            const data = await categoryService.getAllCategorys()
+            categories.value = data.results;
         }
         finally {
             loading.value = false
@@ -23,7 +36,10 @@ export const CategoryStore = defineStore('categoria', () => {
     }
 
     return {
-        getCategorys,
-        categorys
+        getCategories,
+        getCategoryActive,
+        categories,
+        category,
+        categoriesStyle,
     }
 });
