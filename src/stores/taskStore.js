@@ -1,30 +1,29 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-
 import TaskService from '@/services/taskService'
 
 const taskService = new TaskService()
 
+const getDefaultTaskState = () => ({
+    title: "",
+    description: "",
+    endDate: "",
+    postDate: "",
+    startDate: "",
+    status: 1,
+    notification: false,
+    category: [],
+    user: []
+})
+
 export const useTaskStore = defineStore('task', () => {
     const tasks = ref([])
-    const task = ref(
-        {
-        title: "string",
-        description: "string",
-        endDate: "",
-        postDate: "",
-        startDate: "",
-        status: 1,
-        notification: true,
-        category: [
-            0
-        ],
-        user: [
-            0
-        ]
-    }
-    )
+    const task = ref(getDefaultTaskState())
     const carregando = ref(false)
+
+    function resetTask() {
+        task.value = getDefaultTaskState()
+    }
 
     async function getTasks() {
         carregando.value = true;
@@ -43,7 +42,6 @@ export const useTaskStore = defineStore('task', () => {
     async function createTask(newTask) {
         const createdTask = await taskService.createTask(newTask)
         tasks.value.push(createdTask)
-
     }
 
     async function updateTask(id, updatedTask) {
@@ -66,6 +64,7 @@ export const useTaskStore = defineStore('task', () => {
         getTask,
         createTask,
         updateTask,
-        deleteTask
+        deleteTask,
+        resetTask
     }
 })

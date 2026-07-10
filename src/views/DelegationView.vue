@@ -1,6 +1,6 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { onMounted, ref, watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import { useUserStore } from '@/stores/userStore';
 import { useCountryStore } from '@/stores/countryStore';
 
@@ -17,6 +17,7 @@ const userStore = useUserStore();
 const countryId = ref();
 
 const router = useRouter();
+const route = useRoute();
 const activeModal = ref(null);
 
 const openTaskForm = () => {
@@ -29,10 +30,26 @@ const closeModal = () => {
     router.push('/delegacao')
 };
 
+const checkModalRoute = () => {
+    if (route.path.includes('/delegacao/nova-tarefa') || route.path.includes('/editar')) {
+        activeModal.value = 'form-tarefa';
+    } else {
+        activeModal.value = null;
+    }
+}
+
+watch(
+    () => route.path,
+    () => {
+        checkModalRoute();
+    }
+);
 
 onMounted (() => {
     countryId.value = userStore.user.country.id
     countryStore.getCountry(countryId.value)
+
+    checkModalRoute()
 });
 </script>
 

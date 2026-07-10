@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { useTaskStore } from '@/stores/taskStore'
 import { useStatusStore } from '@/stores/statusStore'
 import { UseCategoryStore } from '@/stores/categoryStore.js'
@@ -9,8 +10,14 @@ import AppButton from '../forms/AppButton.vue'
 const taskStore = useTaskStore();
 const statusStore = useStatusStore();
 const categoryStore = UseCategoryStore();
+const router = useRouter();
+const route = useRoute();
 
 const emit = defineEmits(['openForm']);
+
+function openTask(taskId) {
+    router.push(`/delegacao/tarefas/${taskId}/editar`)
+};
 
 onMounted(() => {
     taskStore.getTasks();
@@ -33,7 +40,7 @@ onMounted(() => {
                 <span class="count-task"> {{ statusStore.toDo.length }} </span>
             </h5>
             <ul v-if="statusStore.toDo.length > 0">
-                <li v-for="task in statusStore.toDo" class="task-card">
+                <li v-for="task in statusStore.toDo" class="task-card" @click="openTask(task.id)">
                     <h3>{{ task.title }}</h3>
                     <p style="color: #969696;">Clique para editar.</p>
                     <div class="task-categories">
@@ -59,7 +66,7 @@ onMounted(() => {
                 <span class="count-task"> {{ statusStore.doing.length }} </span>
             </h5>
             <ul v-if="statusStore.doing.length > 0">
-                <li v-for="task in statusStore.doing" class="task-card">
+                <li v-for="task in statusStore.doing" class="task-card" @click="openTask(task.id)">
                     <h3>{{ task.title }}</h3>
                     <p>Clique para editar.</p>
                     <div class="task-categories">
@@ -85,7 +92,7 @@ onMounted(() => {
                 <span class="count-task"> {{ statusStore.doing.length }} </span>
             </h5>
             <ul v-if="statusStore.doing.length > 0">
-                <li v-for="task in statusStore.doing" class="task-card">
+                <li v-for="task in statusStore.doing" class="task-card" @click="openTask(task.id)">
                     <h3 >{{ task.title }}</h3>
                     <p>Clique para ver detalhes ou editar a tarefa.</p>
                     <div class="task-categories">
