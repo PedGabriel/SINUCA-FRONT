@@ -1,13 +1,14 @@
 <script setup>
 import { onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 import { useTaskStore } from '@/stores/taskStore'
 import { useStatusStore } from '@/stores/statusStore'
+import { UseCategoryStore } from '@/stores/categoryStore.js'
 import AppButton from '../forms/AppButton.vue'
 
 
 const taskStore = useTaskStore();
 const statusStore = useStatusStore();
+const categoryStore = UseCategoryStore();
 
 const emit = defineEmits(['openForm']);
 
@@ -34,7 +35,20 @@ onMounted(() => {
             <ul v-if="statusStore.toDo.length > 0">
                 <li v-for="task in statusStore.toDo" class="task-card">
                     <h3>{{ task.title }}</h3>
-                    <p v-for="c in task.category" :key="c.id" style="color: #969696">{{ c.name }}</p>
+                    <p style="color: #969696;">Clique para editar.</p>
+                    <div class="task-categories">
+                        <div
+                            v-for="c in task.category"
+                            :key="c.id"
+                            class="category-item"
+                            :style="categoryStore.getCategoryActive(c.id).activeStyle"
+                        >   
+                            <p>
+                                <span :class="categoryStore.getCategoryActive(c.id).icon"></span>
+                                {{ c.name }}
+                            </p>
+                        </div>
+                    </div>
                 </li>
             </ul>
             <p v-else class="default">Nenhuma tarefa a fazer</p>
@@ -47,7 +61,20 @@ onMounted(() => {
             <ul v-if="statusStore.doing.length > 0">
                 <li v-for="task in statusStore.doing" class="task-card">
                     <h3>{{ task.title }}</h3>
-                    <p v-for="c in task.category" :key="c.id" style="color: #969696">{{ c.name }}</p>
+                    <p>Clique para editar.</p>
+                    <div class="task-categories">
+                        <div
+                            v-for="c in task.category"
+                            :key="c.id"
+                            class="category-item"
+                            :style="categoryStore.getCategoryActive(c.id).activeStyle"
+                        >   
+                            <p>
+                                <span :class="categoryStore.getCategoryActive(c.id).icon"></span>
+                                {{ c.name }}
+                            </p>
+                        </div>
+                    </div>
                 </li>
             </ul>
             <p v-else class="default">Nenhuma tarefa em andamento</p>
@@ -60,7 +87,20 @@ onMounted(() => {
             <ul v-if="statusStore.doing.length > 0">
                 <li v-for="task in statusStore.doing" class="task-card">
                     <h3 >{{ task.title }}</h3>
-                    <p v-for="c in task.category" :key="c.id" style="color: #969696">{{ c.name }}</p>
+                    <p>Clique para ver detalhes ou editar a tarefa.</p>
+                    <div class="task-categories">
+                        <div
+                            v-for="c in task.category"
+                            :key="c.id"
+                            class="category-item"
+                            :style="categoryStore.getCategoryActive(c.id).activeStyle"
+                        >   
+                            <p>
+                                <span :class="categoryStore.getCategoryActive(c.id).icon"></span>
+                                {{ c.name }}
+                            </p>
+                        </div>
+                    </div>
                 </li>
             </ul>
             <p v-else class="default">Nenhuma tarefa concluída</p>
@@ -114,6 +154,23 @@ onMounted(() => {
     font-size: 1.2rem;
     max-width: 70%;
     word-break: break-word;
+}
+
+.task-categories {
+    display: flex;
+    gap: 1rem;
+}
+
+.category-item {
+    border: none;
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 15px;
+    font-weight: 300;
+
+    & p {
+        font-size: 0.9rem;
+    }
 }
 
 .default {
