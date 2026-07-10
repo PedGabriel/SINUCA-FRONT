@@ -163,6 +163,8 @@ onMounted(() => {
 .task-categories {
     display: flex;
     gap: 1rem;
+    flex-wrap: wrap;
+    max-width: 80%;
 }
 
 .category-item {
