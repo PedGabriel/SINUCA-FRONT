@@ -11,8 +11,9 @@ export const useTaskStore = defineStore('task', () => {
         {
         title: "string",
         description: "string",
-        endDate: "2026-04-15",
-        startDate: "2026-04-15",
+        endDate: "",
+        postDate: "",
+        startDate: "",
         status: 1,
         notification: true,
         category: [

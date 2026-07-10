@@ -2,53 +2,15 @@
 import { reactive, ref, onMounted, onUnmounted } from 'vue'
 import { useTaskStore } from '@/stores/taskStore'
 import { useUserStore } from '@/stores/userStore'
+import { UseCategoryStore } from '@/stores/categoryStore'
 import AppInput from '@/components/forms/AppInput.vue'
 import AppButton from '@/components/forms/AppButton.vue'
 
-const taskStore = useTaskStore()
-const userStore = useUserStore()
+const taskStore = useTaskStore();
+const userStore = useUserStore();
+const categoryStore = UseCategoryStore();
 
 const emits = defineEmits(['close'])
-
-// categorias
-const categories = ref([
-  {
-    id: 2,
-    icon: 'mdi mdi-book-open-page-variant-outline',
-    name: 'Pesquisa',
-    activeStyle: 'background-color: #FFB30F;',
-  },
-  {
-    id: 3,
-    icon: 'mdi mdi-forum-outline',
-    name: 'Debate',
-    activeStyle: 'background-color: #01295F;',
-  },
-  {
-    id: 4,
-    icon: 'mdi mdi-instagram',
-    name: 'Instagram',
-    activeStyle: 'background-color: #FD151B;',
-  },
-  {
-    id: 5,
-    icon: 'mdi mdi-handshake-outline',
-    name: 'Mesas de Coop.',
-    activeStyle: 'background-color: #849324;',
-  },
-  {
-    id: 6,
-    icon: 'mdi mdi-drama-masks',
-    name: 'Apres. Cultural',
-    activeStyle: 'background-color: #FFB30F;',
-  },
-  {
-    id: 7,
-    icon: 'mdi mdi-dots-horizontal',
-    name: 'Outro',
-    activeStyle: 'background-color: #01295F;',
-  },
-])
 
 const toggleCategory = (categoria) => {
   const index = task.category.indexOf(categoria.id)
@@ -87,10 +49,10 @@ const addTask = (task) => {
   emits('close')
 }
 
-// users
 onMounted(() => {
   document.body.style.overflow = 'hidden'
   userStore.getAllUsers()
+  categoryStore.getCategories()
 })
 
 onUnmounted(() => {
@@ -130,12 +92,12 @@ onUnmounted(() => {
         <div class="categories">
           <div
             :class="['category-option', task.category.includes(c.id) ? 'active' : '']"
-            v-for="c in categories"
+            v-for="c in categoryStore.categories"
             :key="c.id"
             @click="toggleCategory(c)"
-            :style="task.category.includes(c.id) ? c.activeStyle : ''"
+            :style="task.category.includes(c.id) ? categoryStore.getCategoryActive(c.id).activeStyle : ''"
           >
-            <p style="font-size: 0.9rem"><span :class="c.icon"></span> {{ c.name }}</p>
+            <p style="font-size: 0.9rem"><span :class="categoryStore.getCategoryActive(c.id).icon"></span> {{ c.name }}</p>
           </div>
         </div>
 

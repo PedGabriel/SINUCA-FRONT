@@ -5,17 +5,24 @@ import { ref, onMounted } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import { usePostStore } from '@/stores/postStore'
 import { useGangStore } from '@/stores/gangStore'
+import { useScheduleStore } from '@/stores/scheduleStore'
+import { useLinkStore } from '@/stores/linkStore'
 
 const router = useRouter();
 
 const taskStore = useTaskStore();
 const userStore = useUserStore();
 const postStore = usePostStore();
-const gangStore = useGangStore()
+const gangStore = useGangStore();
+const scheduleStore = useScheduleStore();
+const linkStore = useLinkStore();
 
 
 onMounted(() => {
     userStore.checkAuth()
+})
+
+onMounted(() => {
     userStore.getAllUsers()
 })
 
@@ -29,6 +36,14 @@ onMounted(() => {
 
 onMounted(() => {
     gangStore.getGangs()
+})
+
+onMounted(() => {
+    scheduleStore.getSchedules()
+})
+
+onMounted(() => {
+    linkStore.getLinks()
 })
 
 const novaTask = ref(
@@ -95,6 +110,7 @@ const Password = ref('')
     <h2>Usuários:</h2>
     <div v-for="u in userStore.users" :key="u.id">
         <p>{{ u.email }}</p>
+        <p>{{ u.name }}</p>
     </div>
 </div>
 <br><br><br>
@@ -103,6 +119,22 @@ const Password = ref('')
     <div v-for="g in gangStore.gangs" :key="g.id" class="gang">
         <p>{{ g.name }}</p>
         <p>{{ g.courses }}</p>
+    </div>
+</div>
+<br><br><br>
+<div>
+    <h2>Schedules:</h2>
+    <div v-for="s in scheduleStore.schedules" :key="s.id" class="schedule">
+        <p>{{ s.title }}</p>
+        <p>{{ s.description }}</p>
+    </div>
+</div>
+<br><br><br>
+<div>
+    <h2>Links:</h2>
+    <div v-for="l in linkStore.links" :key="l.id" class="link">
+        <p>{{ l.name }}</p>
+        <p>{{ l.url }}</p>
     </div>
 </div>
 </template>
