@@ -1,8 +1,10 @@
 <script setup>
+import { ref } from "vue";
 import { onMounted } from "vue";
 import { useScheduleStore } from "@/stores/scheduleStore";
 
 const scheduleStore = useScheduleStore();
+const schedules = ref()
 
 onMounted(() => {
   scheduleStore.getSchedules();
@@ -57,14 +59,29 @@ const formatDate = (dateString) => {
 
 <style scoped>
 ul {
+
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
 }
 
 .schedule-item {
-  margin-top: 1rem;
-  padding: 1.2rem 1.8rem;
+  margin-top: 1.5rem;
+  padding: 1.2rem 1.4rem;
   background-color: #fff;
   border-radius: 0.8rem;
+}
+
+.schedule-item:has(.mdi-instagram) {
+  border-left: 0.9rem solid #FD151B;
+}
+
+.schedule-item:has(.mdi-forum-outline) {
+  border-left: 0.9rem solid #01295F;
+}
+
+.schedule-item:has(.mdi-handshake-outline) {
+  border-left: 0.9rem solid #849324;
 }
 
 .header-schedule {
