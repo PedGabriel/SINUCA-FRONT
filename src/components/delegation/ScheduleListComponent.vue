@@ -25,12 +25,12 @@ const formatDate = (dateString) => {
 <template>
   <section>
     <div class="header-section">
-      <h4 style="font-weight: bolder; font-size: 1.2rem">Cronograma</h4>
+      <h4 style="font-weight: bolder; font-size: 1.2rem; margin-bottom: 1.5rem;">Cronograma</h4>
     </div>
     <ul>
       <li v-for="s in scheduleStore.schedules" :key="s.id" class="schedule-item">
         <div class="header-schedule">
-
+        
           <span style="color: #969696;" v-if="s.category == '1'" class="mdi mdi-instagram">
             Postagem
           </span>
@@ -51,7 +51,7 @@ const formatDate = (dateString) => {
         <h3>
           {{ s.title }}
         </h3>
-        <p style="font-size: 0.7rem; color: #969696">Clique para ver mais detalhes.</p>
+        <p style="font-size: 1rem; color: #969696">Clique para ver mais detalhes.</p>
       </li>
     </ul>
   </section>
@@ -59,14 +59,18 @@ const formatDate = (dateString) => {
 
 <style scoped>
 ul {
-
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
+li:active{
+    transition: all .3s;
+    transform: scale(0.95);
+}
+
 .schedule-item {
-  margin-top: 1.5rem;
+  margin-top: 0.6rem;
   padding: 1.2rem 1.4rem;
   background-color: #fff;
   border-radius: 0.8rem;
@@ -91,11 +95,10 @@ ul {
 }
 
 h3 {
-    font-size: 1.1rem; 
-    font-weight: 500;
-    margin-bottom: 0.5rem;
+    font-size: 1.2rem; 
+    margin-bottom: 0.6rem;
+    max-width: 90%;
+    word-break: break-word;
 }
-
-
 
 </style>

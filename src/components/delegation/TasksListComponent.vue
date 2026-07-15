@@ -91,7 +91,7 @@ onMounted(() => {
             </h5>
             <ul v-if="statusStore.done.length > 0">
                 <li v-for="task in statusStore.done" :key="task.id" @click="openTask(task.id)" class="task-card">
-                    <h3 >{{ task.title }}</h3>
+                    <h3>{{ task.title }}</h3>
                     <p style="color: #969696;">Clique para editar.</p>
                     <div class="task-categories">
                         <div
@@ -152,6 +152,11 @@ onMounted(() => {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(220, 220, 220, 0.1);
     margin-bottom: 1rem;
+}
+
+.task-card:active{
+    transition: all .3s;
+    transform: scale(0.95);
 }
 
 .task-card h3 {
