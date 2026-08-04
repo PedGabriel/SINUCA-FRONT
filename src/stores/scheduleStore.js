@@ -17,7 +17,7 @@ export const useScheduleStore = defineStore('schedule', () => {
         description: '',
         country: 0,
     });
-    
+
     const loading = ref(false);
 
     async function getSchedules() {
@@ -27,7 +27,7 @@ export const useScheduleStore = defineStore('schedule', () => {
             schedules.value = data.results;
         } finally {
             loading.value = false;
-        }
+        }categoryName
     }
 
     async function getSchedule(id) {
@@ -59,6 +59,6 @@ export const useScheduleStore = defineStore('schedule', () => {
         getSchedule,
         createSchedule,
         updateSchedule,
-        deleteSchedule
+        deleteSchedule,
     }
 })

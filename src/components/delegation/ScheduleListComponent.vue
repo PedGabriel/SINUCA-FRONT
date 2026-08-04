@@ -2,11 +2,8 @@
 import { ref } from "vue";
 import { onMounted } from "vue";
 import { useScheduleStore } from "@/stores/scheduleStore";
-import { useRouter } from "vue-router";
 
 const scheduleStore = useScheduleStore();
-const schedules = ref();
-const router = useRouter();
 
 const emit = defineEmits(["openDetails"]);
 
@@ -24,8 +21,8 @@ const formatDate = (dateString) => {
   return `${day}/${month}`;
 };
 
-function openSchedule(taskId) {
-    router.push(`/delegacao/schedule/${taskId}`)
+function openSchedule(scheduleId) {
+    emit("openDetails", scheduleId)
 };
 
 </script>

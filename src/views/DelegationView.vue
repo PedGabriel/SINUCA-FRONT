@@ -23,15 +23,17 @@ const activeTab = ref(0);
 const router = useRouter();
 const route = useRoute();
 const activeModal = ref(null);
+const selectedScheduleId = ref(null)
 
 const openTaskForm = () => {
     activeModal.value = 'form-tarefa'
     router.push('/delegacao/nova-tarefa')
 };
 
-const openScheduleModal = () => {
+const openScheduleModal = (id) => {
+    selectedScheduleId.value = id
     activeModal.value = 'schedule-details'
-    router.push('/delegacao/schedule')
+    router.push(`/delegacao/schedule/${id}`)
 }
 
 const closeModal = () => {
@@ -42,6 +44,8 @@ const closeModal = () => {
 const checkModalRoute = () => {
     if (route.path.includes('/delegacao/nova-tarefa') || route.path.includes('/editar')) {
         activeModal.value = 'form-tarefa';
+    } else if (route.path.includes('/delegacao/schedule/')) {
+        activeModal.value = 'schedule-details';
     } else {
         activeModal.value = null;
     }
@@ -90,7 +94,8 @@ onMounted (() => {
         />
 
         <ScheduleModal
-            v-if="activeModal === 'schedule-details'" 
+            v-if="activeModal === 'schedule-details'"
+            :schedule-id="selectedScheduleId"
             @close="closeModal"
         />
     </main>
