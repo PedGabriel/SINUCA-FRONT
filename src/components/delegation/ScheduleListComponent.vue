@@ -2,9 +2,13 @@
 import { ref } from "vue";
 import { onMounted } from "vue";
 import { useScheduleStore } from "@/stores/scheduleStore";
+import { useRouter } from "vue-router";
 
 const scheduleStore = useScheduleStore();
-const schedules = ref()
+const schedules = ref();
+const router = useRouter();
+
+const emit = defineEmits(["openDetails"]);
 
 onMounted(() => {
   scheduleStore.getSchedules();
@@ -20,6 +24,10 @@ const formatDate = (dateString) => {
   return `${day}/${month}`;
 };
 
+function openSchedule(taskId) {
+    router.push(`/delegacao/schedule/${taskId}`)
+};
+
 </script>
 
 <template>
@@ -28,7 +36,7 @@ const formatDate = (dateString) => {
       <h4 style="font-weight: bolder; font-size: 1.2rem; margin-bottom: 1.5rem;">Cronograma</h4>
     </div>
     <ul>
-      <li v-for="s in scheduleStore.schedules" :key="s.id" class="schedule-item">
+      <li v-for="s in scheduleStore.schedules" :key="s.id" class="schedule-item" @click="openSchedule(s.id)">
         <div class="header-schedule">
         
           <span style="color: #969696;" v-if="s.category == '1'" class="mdi mdi-instagram">

@@ -12,6 +12,7 @@ import TasksListComponent from '@/components/delegation/TasksListComponent.vue';
 import CreatTaskModal from '@/components/delegation/modais/CreatTaskModal.vue';
 import AppTabFooter from '@/components/layout/mobile/AppTabFooter.vue';
 import ScheduleListComponent from '@/components/delegation/ScheduleListComponent.vue';
+import ScheduleModal from '@/components/delegation/modais/ScheduleModal.vue';
 
 const countryStore = useCountryStore();
 const userStore = useUserStore();
@@ -27,6 +28,11 @@ const openTaskForm = () => {
     activeModal.value = 'form-tarefa'
     router.push('/delegacao/nova-tarefa')
 };
+
+const openScheduleModal = () => {
+    activeModal.value = 'schedule-details'
+    router.push('/delegacao/schedule')
+}
 
 const closeModal = () => {
     activeModal.value = null
@@ -72,7 +78,7 @@ onMounted (() => {
             @open-form="openTaskForm"
         />
         <ScheduleListComponent v-if="activeTab === 1" 
-            
+            @open-details="openScheduleModal"
         />
 
 
@@ -80,6 +86,11 @@ onMounted (() => {
 
         <CreatTaskModal  
             v-if="activeModal === 'form-tarefa'"
+            @close="closeModal"
+        />
+
+        <ScheduleModal
+            v-if="activeModal === 'schedule-details'" 
             @close="closeModal"
         />
     </main>
