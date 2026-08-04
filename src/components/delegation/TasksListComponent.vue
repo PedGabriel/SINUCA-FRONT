@@ -40,7 +40,7 @@ onMounted(() => {
                 <span class="count-task"> {{ statusStore.toDo.length }} </span>
             </h5>
             <ul v-if="statusStore.toDo.length > 0">
-                <li v-for="task in statusStore.toDo" class="task-card" @click="openTask(task.id)">
+                <li v-for="task in statusStore.toDo" :key="task.id" @click="openTask(task.id)" class="task-card">
                     <h3>{{ task.title }}</h3>
                     <p style="color: #969696;">Clique para editar.</p>
                     <div class="task-categories">
@@ -65,7 +65,7 @@ onMounted(() => {
                 <span class="count-task"> {{ statusStore.doing.length }} </span>
             </h5>
             <ul v-if="statusStore.doing.length > 0">
-                <li v-for="task in statusStore.doing" class="task-card" @click="openTask(task.id)">
+                <li v-for="task in statusStore.doing" :key="task.id" @click="openTask(task.id)" class="task-card">
                     <h3>{{ task.title }}</h3>
                     <p style="color: #969696;">Clique para editar.</p>
                     <div class="task-categories">
@@ -90,8 +90,8 @@ onMounted(() => {
                 <span class="count-task"> {{ statusStore.done.length }} </span>
             </h5>
             <ul v-if="statusStore.done.length > 0">
-                <li v-for="task in statusStore.done" class="task-card" @click="openTask(task.id)">
-                    <h3 >{{ task.title }}</h3>
+                <li v-for="task in statusStore.done" :key="task.id" @click="openTask(task.id)" class="task-card">
+                    <h3>{{ task.title }}</h3>
                     <p style="color: #969696;">Clique para editar.</p>
                     <div class="task-categories">
                         <div
@@ -154,6 +154,11 @@ onMounted(() => {
     margin-bottom: 1rem;
 }
 
+.task-card:active{
+    transition: all .3s;
+    transform: scale(0.95);
+}
+
 .task-card h3 {
     font-size: 1.2rem;
     max-width: 90%;
@@ -171,10 +176,10 @@ onMounted(() => {
     padding: 0.4rem 1rem;
     border-radius: 15px;
     font-weight: 300;
+}
 
-    & p {
-        font-size: 0.9rem;
-    }
+.category-item p {
+    font-size: 0.9rem;
 }
 
 .default {

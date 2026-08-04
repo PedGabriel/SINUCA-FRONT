@@ -11,10 +11,13 @@ import NavigationComponent from '@/components/delegation/NavigationComponent.vue
 import TasksListComponent from '@/components/delegation/TasksListComponent.vue';
 import CreatTaskModal from '@/components/delegation/modais/CreatTaskModal.vue';
 import AppTabFooter from '@/components/layout/mobile/AppTabFooter.vue';
+import ScheduleListComponent from '@/components/delegation/ScheduleListComponent.vue';
 
 const countryStore = useCountryStore();
 const userStore = useUserStore();
 const countryId = ref();
+
+const activeTab = ref(0);
 
 const router = useRouter();
 const route = useRoute();
@@ -61,10 +64,17 @@ onMounted (() => {
             :subtitle="countryStore.country?.political_name"
             :-country-flag-url="countryStore.country?.flag?.url"
         />
-        <NavigationComponent />
-        <TasksListComponent 
+        <NavigationComponent 
+            @change-tab="activeTab = $event"
+        />
+        
+        <TasksListComponent v-if="activeTab === 0"
             @open-form="openTaskForm"
         />
+        <ScheduleListComponent v-if="activeTab === 1" 
+            
+        />
+
 
         <!-- MODAL -->
 
