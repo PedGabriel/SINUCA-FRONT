@@ -16,13 +16,13 @@ onMounted(() => {
 
 const nameCategory = ref('')
 
-    if (props.scheduleId == 1) {
+    if (scheduleStore.schedule.category == 1) {
         nameCategory.value = 'Postagem';
     }
-    else if (props.scheduleId == 2) {
+    else if (scheduleStore.schedule.category == 2) {
         nameCategory.value = 'Debate';
     }
-    else if (props.scheduleId == 3) {
+    else if (scheduleStore.schedule.category == 3) {
         nameCategory.value = 'Mesa de cooperação';
     }
 
@@ -31,24 +31,30 @@ const nameCategory = ref('')
 </script>
 
 <template>
-    <section v-if="scheduleId == 1">
+    <section v-if="scheduleStore.schedule.category == 1">
 
     </section>
-    <section v-else-if="scheduleId == 2">
+    <section v-else-if="scheduleStore.schedule.category == 2">
         <div class="header">
             <h1>{{ nameCategory }}</h1>
-            <a>
+            <button>
                 <span class="mdi mdi-close"></span>
-            </a>
+            </button>
             <div>
                 
             </div>
         </div>
-        <div>
-            <h4></h4>
+        <div class="topic">
+            <h4>
+                Tema do debate
+            </h4>
+            <h2>
+                {{ scheduleStore.schedule.title }}
+            </h2>
         </div>
+
     </section>
-    <section v-else-if="scheduleId == 3">
+    <section v-else-if="scheduleStore.schedule.category == 3">
         
     </section>
 

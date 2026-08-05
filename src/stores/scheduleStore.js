@@ -27,7 +27,7 @@ export const useScheduleStore = defineStore('schedule', () => {
             schedules.value = data.results;
         } finally {
             loading.value = false;
-        }categoryName
+        }
     }
 
     async function getSchedule(id) {
