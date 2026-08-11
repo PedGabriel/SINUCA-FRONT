@@ -15,7 +15,7 @@ export const useScheduleStore = defineStore('schedule', () => {
         endDate: '',
         location: '',
         description: '',
-        country: 0,
+        country: [],
     });
 
     const loading = ref(false);
