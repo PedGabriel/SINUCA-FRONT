@@ -1,7 +1,9 @@
 <script setup>
 import { useScheduleStore } from '@/stores/scheduleStore'
-import { onMounted, ref, computed } from 'vue'
 import { useCountryStore } from '@/stores/countryStore'
+import { useLinkStore } from '@/stores/linkStore'
+import { onMounted, ref, computed } from 'vue'
+
 
 const props = defineProps({
     scheduleId: String,
@@ -9,6 +11,7 @@ const props = defineProps({
 
 const countryStore = useCountryStore()
 const scheduleStore = useScheduleStore()
+const linkStore = useLinkStore()
 
 const formatDate = (data) => {
     if (!data) return ''
@@ -30,6 +33,7 @@ const formatTime = (data) => {
 }
 
 const countrys = ref([])
+const links = ref([])
 
 onMounted(async () => {
     scheduleStore.getSchedules()
@@ -38,6 +42,10 @@ onMounted(async () => {
     for (const c of scheduleStore.schedule.country) {
         await countryStore.getCountry(c)
         countrys.value.push(countryStore.country)
+    }
+    for (const d of scheduleStore.schedule.docs) {
+        await linkStore.getLink(d)
+        links.value.push(linkStore.link)
     }
 })
 
@@ -109,8 +117,8 @@ const nameCategory = computed(() => {
         </div>
         <div class="docs">
             <h3> <span class="mdi mdi-file-document-outline"></span> Documentos relacionados</h3>
-            <div >
-                <a href=""></a>
+            <div v-for="link in links" :key="link.id">
+                <a :href="link.url" target="_blank">{{ link.name }}</a>
             </div>
         </div>
     </section>

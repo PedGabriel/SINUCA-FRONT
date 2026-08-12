@@ -65,8 +65,7 @@ onMounted(() => {
                 <span class="count-task"> {{ statusStore.doing.length }} </span>
             </h5>
             <ul v-if="statusStore.doing.length > 0">
-                <li v-for="task in statusStore.doing" :key="task.id" @click="
-                (task.id)" class="task-card">
+                <li v-for="task in statusStore.doing" :key="task.id" @click="openTask(task.id)" class="task-card">
                     <h3>{{ task.title }}</h3>
                     <p style="color: #969696;">Clique para editar.</p>
                     <div class="task-categories">
