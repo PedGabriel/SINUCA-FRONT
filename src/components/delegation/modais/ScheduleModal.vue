@@ -35,7 +35,7 @@ const formatTime = (data) => {
 const countrys = ref([])
 
 onMounted(async () => {
-    //document.body.style.overflow = 'hidden'
+    document.body.style.overflow = 'hidden'
     scheduleStore.getSchedules()
     await scheduleStore.getSchedule(props.scheduleId)
 
@@ -62,9 +62,9 @@ const nameCategory = computed(() => {
 
 const emits = defineEmits(['close']);
 
-/*onUnmounted(() => {
+onUnmounted(() => {
   document.body.style.overflow = ''
-})*/
+})
 
 </script>
 
@@ -131,9 +131,8 @@ const emits = defineEmits(['close']);
         </div>
         <div class="docs">
             <h3> <span class="mdi mdi-file-document-outline"></span> Documentos relacionados</h3>
-            <div v-for="link in linkStore.links" :key="link.id">
-                <p v-if="link.url !== link.name">{{ link.name }}:</p>
-                <a :href="link.url" target="_blank">{{ link.url }}</a>
+            <div >
+                <a v-for="link in linkStore.links" :key="link.id" :href="link.url" target="_blank">{{ link.url }}</a>
             </div>
         </div>
     </section>
@@ -141,7 +140,7 @@ const emits = defineEmits(['close']);
 </template>
 
 <style scoped>
-/*
+
 .background {
   position: fixed;
   z-index: 10;
@@ -152,22 +151,27 @@ const emits = defineEmits(['close']);
   height: 100vh;
   width: 100%;
 }
-.modal{
+
+.modal {
+    border-top: #01295F solid 1.8rem;
+    border-radius: 0.8rem;
+    width: 70%;
     z-index: 20;
     position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: #ffffff;
-}*/
-
-.header {
-    
+    top: 0;
+    background-color: #FFFFFF;
+    padding: 5vw;
+    margin-top: 10vw;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .title {
     display: flex;
     justify-content: space-between;
+    margin-top: 6vw;
 }
+
 .countrys {
     display: flex;
     justify-content: space-around;
@@ -229,5 +233,18 @@ img {
     word-spacing: 4px;
 }
 
+div.docs div {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: auto;
+    gap: 1rem;
+}
+
+div.docs h3 {
+    color: #01295F;
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 2vw;
+}
 
 </style>
