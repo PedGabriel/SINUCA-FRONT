@@ -1,10 +1,22 @@
 <script setup>
+import { ref } from 'vue'
+
 const props = defineProps({
     title: String,
     date: String,
     description: String,
     imageUrl: String,
-});
+})
+
+const isExpanded = ref(false)
+const textWrapref = ref(null)
+
+function toggle() {
+    isExpanded.value = !isExpanded.value
+    if (!isExpanded.value && textWrapref.value) {
+        textWrapref.value.scrollTop = 0
+    }
+}
 </script>
 
 <template>
@@ -14,9 +26,15 @@ const props = defineProps({
             <span class="post-date">{{ props.date }}</span>
         </div>
 
-        <p class="post-desc">{{ props.description }}</p>
+        <div class="text-wrap" :class="{ expanded: isExpanded }" ref="textWrapref">
+            <p class="post-desc">{{ props.description }}</p>
+        </div>
 
-        <img class="img-post" v-if="props.imageUrl" :src="props.imageUrl">
+        <button class="toggle-btn" @click="toggle">
+            {{ isExpanded ? 'Ver menos' : 'Ver mais' }}
+        </button>
+
+        <img class="img-post" v-if="props.imageUrl" :src="props.imageUrl" />
     </div>
 </template>
 
@@ -39,19 +57,49 @@ const props = defineProps({
         font-weight: bold;
     }
 
-    &  .post-date {
+    & .post-date {
         font-size: 1rem;
-        border: 3px solid #01295f;
-        border-radius: 8px;
-        padding: 0.1rem 0.5rem;
+        color: #969696;
     }
+}
+
+.text-wrap {
+    max-height: 90px;
+    overflow: hidden;
+    position: relative;
+    transition: max-height 0.25s ease;
+}
+
+.text-wrap.expanded {
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.text-wrap:not(.expanded)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 28px;
+    background: linear-gradient(to bottom, transparent, #ffffff);
 }
 
 .post-desc {
     font-size: 0.9rem;
     text-align: justify;
-    color: #969696;
-
+    color: #525050;
+    line-height: 1.3;
 }
 
+.toggle-btn {
+    margin-top: 0.5rem;
+    background: none;
+    border: none;
+    padding: 0;
+    color: #01295f;
+    outline: none;
+    cursor: pointer;
+    font-weight: 600;
+}
 </style>

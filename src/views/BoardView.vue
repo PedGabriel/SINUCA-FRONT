@@ -1,7 +1,15 @@
 <script setup>
+import { onMounted } from 'vue';
+import { usePostStore } from '@/stores/postStore';
 import AppHeaderMob from '@/components/layout/mobile/AppHeaderMob.vue'
 import AppTabFooter from '@/components/layout/mobile/AppTabFooter.vue'
 import CardPostComponent from '@/components/posts/CardPostComponent.vue'
+
+const postStore = usePostStore();
+
+onMounted(() => {
+    postStore.getPosts();
+})
 </script>
 <template>
     <AppHeaderMob title="Mural" />
@@ -18,7 +26,14 @@ import CardPostComponent from '@/components/posts/CardPostComponent.vue'
         </section>
 
         <section class="post-list">
-            <CardPostComponent title="Titulo para teste" date="19/08" description="Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit. There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain." />
+            <CardPostComponent 
+                v-for="post in postStore.posts"
+                :key="post.id"
+                :title="post.title"
+                :date="post.created_at"
+                :description="post.content"
+                :image-url="post.foto.url"
+            />
         </section>
     </main>
     <AppTabFooter />

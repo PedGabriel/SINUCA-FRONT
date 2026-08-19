@@ -58,6 +58,7 @@ const router = createRouter({
     {
       path: '/mural',
       name: 'mural',
+      component: () => import('../views/BoardView.vue')
     },
     {
       path: '/p',
