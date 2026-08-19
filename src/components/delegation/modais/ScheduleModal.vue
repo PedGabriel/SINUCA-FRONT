@@ -33,7 +33,6 @@ const formatTime = (data) => {
 }
 
 const countrys = ref([])
-const links = ref([])
 
 onMounted(async () => {
     //document.body.style.overflow = 'hidden'
@@ -44,10 +43,8 @@ onMounted(async () => {
         await countryStore.getCountry(c)
         countrys.value.push(countryStore.country)
     }
-    for (const d of scheduleStore.schedule.docs) {
-        await linkStore.getLink(d)
-        links.value.push(linkStore.link)
-    }
+
+    await linkStore.getLinks()
 })
 
 const nameCategory = computed(() => {
@@ -106,7 +103,7 @@ const emits = defineEmits(['close']);
                 {{ scheduleStore.schedule.title }}
             </h3>
         </div>
-        <div>
+        <div class="uldiv">
             <ul class="schedules-infos">
                 <li>
                     <span class="mdi mdi-calendar-month-outline"></span>
@@ -134,8 +131,9 @@ const emits = defineEmits(['close']);
         </div>
         <div class="docs">
             <h3> <span class="mdi mdi-file-document-outline"></span> Documentos relacionados</h3>
-            <div v-for="link in links" :key="link.id">
-                <a :href="link.url" target="_blank">{{ link.name }}</a>
+            <div v-for="link in linkStore.links" :key="link.id">
+                <p v-if="link.url !== link.name">{{ link.name }}:</p>
+                <a :href="link.url" target="_blank">{{ link.url }}</a>
             </div>
         </div>
     </section>
@@ -175,6 +173,7 @@ const emits = defineEmits(['close']);
     justify-content: space-around;
     align-items: center;
     font-weight: 500;
+    margin: 6vw 0;
 }
 img {
     width: 5rem;
@@ -182,23 +181,53 @@ img {
     border-radius: 10%;
 }
 .topic {
-    margin-top: 3vw;
-    border: 2px solid #b6b6b6;
+    border: 2px solid #e0e0e0;
     padding: 1rem;
     border-radius: 10px;
 }
 .topic h4 {
     color: #01295F; 
-    
+    font-weight: 500;
 }
 .topic h3 {
-    font-weight: 700;
+    font-weight: 600;
     font-size: 1.1rem;
     margin-top: 0.5rem;
 }
 
-.schedules-infos{
-    display: flex;
+.uldiv {
+    margin: 1rem 0 6vw 0;
 }
+
+.schedules-infos{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    gap: 1rem;
+    text-align: center;
+}
+
+.schedules-infos li {
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 2vw 0;
+}
+
+.descricao {
+    margin-bottom: 6vw;
+}
+
+.descricao h3{
+    color: #01295F;
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 2vw;
+}
+
+.descricao p {
+    line-height: 1.3;
+    word-spacing: 4px;
+}
+
 
 </style>
