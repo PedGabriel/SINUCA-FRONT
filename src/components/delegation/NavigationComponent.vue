@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 
 const tabsNav = reactive([
     {
@@ -32,23 +32,37 @@ const toogleActive = (id) => {
     }
 };
 
+const emit = defineEmits(['changeTab']);
+
+
+const medidor = ref(0);
+
+watch(medidor, () => {
+    if(medidor.value < 0) {
+        medidor.value = 2
+    } else if(medidor.value > tabsNav.length - 2) {
+        medidor.value = 0
+    }
+});
+
 </script>
 
 <template>
     <div class="container">
-        <span class="mdi mdi-chevron-left" style="font-size: 1.7rem;"></span>
+        <span class="mdi mdi-chevron-left" style="font-size: 1.7rem;" @click="medidor--"></span>
         <ul class="tabs-navigation">
             <li 
-                v-for="tab in tabsNav.slice(0, 2)" 
+                v-for="tab in tabsNav.slice(medidor, medidor + 2)" 
                 :key="tab.id" 
                 :class="isActive === tab.id ? 'active' : 'tab-item'"
-                @click="toogleActive(tab.id)"
+                @click="toogleActive(tab.id); emit('changeTab', tab.id)"
+                
                 >
                 <span :class="tab.icon"></span>
                 <h4>{{ tab.name }}</h4>
             </li>
         </ul>
-        <span class="mdi mdi-chevron-right" style="font-size: 1.7rem;"></span>
+        <span class="mdi mdi-chevron-right" style="font-size: 1.7rem;" @click="medidor++"></span>
     </div>
 </template>
 
@@ -60,19 +74,22 @@ const toogleActive = (id) => {
     align-items: center;
     justify-content: center;
     gap: 0.6rem;
+    padding: 2rem 0;
+    height: 3rem;
+    position: relative;
 }
 
 .tabs-navigation {
     display: flex;
     gap: 1rem;
     justify-content: center;
-    padding: 2rem 0;
     align-items: center;
 }
 
 .tabs-navigation li {
     display: flex;
     gap: 0.5rem;
+    font-size: 1rem;
 }
 
 .tab-item {
@@ -83,7 +100,22 @@ const toogleActive = (id) => {
     background-color: #F8F8FF;
     font-weight: bold;
     color: #01295F;
-    padding: 1rem;
     border-radius: 10px;
+    transition: all .3s ease-in-out;
 }
+
+.active:active {
+    transform: scale(0.95);
+}
+
+span.mdi-chevron-left {
+    position: absolute;
+    left: 1rem;
+}
+
+span.mdi-chevron-right {
+    position: absolute;
+    right: 1rem;
+}
+
 </style>

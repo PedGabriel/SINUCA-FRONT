@@ -33,12 +33,12 @@ const options = [
     },
 ]
 
-const selectUserType = ((title, icon, color) => {
-    userStore.userType = title
+const selectUserType = ((id, title, icon, color) => {
+    userStore.userType = id
 
     router.push({
         path: '/login',
-        query: { title, icon, color }
+        query: { id, title, icon, color }
     })
 })
 </script>
@@ -54,7 +54,7 @@ const selectUserType = ((title, icon, color) => {
                 :key="opt.id"
                 class="option-item"
                 :style="opt.border"
-                @click="selectUserType(opt.title, opt.icon, opt.color)"
+                @click="selectUserType(opt.id, opt.title, opt.icon, opt.color)"
             >   
                 <span :class="opt.icon" :style="`color: ${opt.color}`"></span>
                 <h3 style="font-weight: bold;">{{ opt.title }}</h3>

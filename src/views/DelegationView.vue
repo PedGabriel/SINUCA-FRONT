@@ -1,18 +1,27 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { onMounted, ref, watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import { useUserStore } from '@/stores/userStore';
+import { useCountryStore } from '@/stores/countryStore';
+
 
 import AppHeaderMob from '@/components/layout/mobile/AppHeaderMob.vue';
-import BannerDelegation from '@/components/delegation/BannerDelegation.vue';
+import BannerComponent from '@/components/layout/BannerComponent.vue';
 import NavigationComponent from '@/components/delegation/NavigationComponent.vue';
 import TasksListComponent from '@/components/delegation/TasksListComponent.vue';
 import CreatTaskModal from '@/components/delegation/modais/CreatTaskModal.vue';
 import AppTabFooter from '@/components/layout/mobile/AppTabFooter.vue';
+import ScheduleListComponent from '@/components/delegation/ScheduleListComponent.vue';
+
+const countryStore = useCountryStore();
+const userStore = useUserStore();
+const countryId = ref();
+
+const activeTab = ref(0);
 
 const router = useRouter();
+const route = useRoute();
 const activeModal = ref(null);
-
 
 const openTaskForm = () => {
     activeModal.value = 'form-tarefa'
@@ -24,16 +33,48 @@ const closeModal = () => {
     router.push('/delegacao')
 };
 
+const checkModalRoute = () => {
+    if (route.path.includes('/delegacao/nova-tarefa') || route.path.includes('/editar')) {
+        activeModal.value = 'form-tarefa';
+    } else {
+        activeModal.value = null;
+    }
+}
+
+watch(
+    () => route.path,
+    () => {
+        checkModalRoute();
+    }
+);
+
+onMounted (() => {
+    countryId.value = userStore.user.country.id
+    countryStore.getCountry(countryId.value)
+
+    checkModalRoute()
+});
 </script>
 
 <template>
     <AppHeaderMob title="Delegação"/>
     <main>
-        <BannerDelegation />
-        <NavigationComponent />
-        <TasksListComponent 
+        <BannerComponent 
+            :title="countryStore.country?.name"
+            :subtitle="countryStore.country?.political_name"
+            :-country-flag-url="countryStore.country?.flag?.url"
+        />
+        <NavigationComponent 
+            @change-tab="activeTab = $event"
+        />
+        
+        <TasksListComponent v-if="activeTab === 0"
             @open-form="openTaskForm"
         />
+        <ScheduleListComponent v-if="activeTab === 1" 
+            
+        />
+
 
         <!-- MODAL -->
 

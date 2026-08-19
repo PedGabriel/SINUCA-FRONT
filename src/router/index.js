@@ -23,8 +23,8 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
-      path: '/delegacao/tarefas/:id',
-      component: () => import('../components/delegation/modais/TaskDetailModal.vue'),
+      path: '/delegacao/tarefas/:id/editar',
+      component: () => import('../views/DelegationView.vue'),
       meta: { requiresAuth: true },
     },
     {
@@ -41,6 +41,23 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: () => import('../views/LoginView.vue')
+    },
+    {
+      path: '/cadastro',
+      name: 'cadastro',
+      component: () => import('../views/RegisterView.vue')
+    },
+    {
+      path: '/chat',
+      name: 'chat',
+    },
+    {
+      path: '/historia',
+      name: 'histora',
+    },
+    {
+      path: '/mural',
+      name: 'mural',
     },
     {
       path: '/p',

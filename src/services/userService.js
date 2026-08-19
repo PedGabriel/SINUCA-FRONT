@@ -11,8 +11,8 @@ export default class UserService {
     return response.data;
   }
 
-  async register(email, name, password) {
-    const response = await axios.post('/registro/', { email, name, password });
+  async register(email, name, password, gang, matriculation, foto) {
+    const response = await axios.post('/registro/', { email, name, password, gang, matriculation, foto });
     return response.data;
   }
 
@@ -25,4 +25,4 @@ export default class UserService {
     const {data} = await axios.get('/usuarios/');
     return data;
   }
-}
+};
