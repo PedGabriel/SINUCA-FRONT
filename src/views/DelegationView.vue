@@ -38,6 +38,7 @@ const openScheduleModal = (id) => {
 
 const closeModal = () => {
     activeModal.value = null
+    selectedScheduleId.value = null
     router.push('/delegacao')
 };
 

@@ -155,21 +155,22 @@ onUnmounted(() => {
 .modal {
     border-top: #01295F solid 1.8rem;
     border-radius: 0.8rem;
-    width: 70%;
+    height: 400px;
+    width: 80%;
     z-index: 20;
     position: fixed;
-    top: 0;
     background-color: #FFFFFF;
-    padding: 5vw;
-    margin-top: 10vw;
+    padding: 1.5rem;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    overflow-y: auto;
+    
 }
 .title {
     display: flex;
     justify-content: space-between;
-    margin-top: 6vw;
+    margin-top: 1rem;
 }
 
 .countrys {
@@ -177,7 +178,7 @@ onUnmounted(() => {
     justify-content: space-around;
     align-items: center;
     font-weight: 500;
-    margin: 6vw 0;
+    margin: 1rem 0;
 }
 img {
     width: 5rem;
@@ -200,7 +201,7 @@ img {
 }
 
 .uldiv {
-    margin: 1rem 0 6vw 0;
+    margin: 1rem 0;
 }
 
 .schedules-infos{
@@ -215,22 +216,24 @@ img {
     border: 2px solid #e0e0e0;
     border-radius: 10px;
     padding: 2vw 0;
+    font-size: 0.9rem;
 }
 
 .descricao {
-    margin-bottom: 6vw;
+    margin: 1rem 0;
 }
 
 .descricao h3{
     color: #01295F;
     font-size: 1.3rem;
     font-weight: 500;
-    margin-bottom: 2vw;
+    margin-bottom: 1rem;
 }
 
 .descricao p {
+    text-align: justify;
     line-height: 1.3;
-    word-spacing: 4px;
+    font-size: 0.9rem;
 }
 
 div.docs div {
@@ -244,7 +247,7 @@ div.docs h3 {
     color: #01295F;
     font-size: 1.3rem;
     font-weight: 500;
-    margin-bottom: 2vw;
+    margin-bottom: 1rem;
 }
 
 </style>
