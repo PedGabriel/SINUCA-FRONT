@@ -23,7 +23,7 @@ function toggle() {
     <div class="card">
         <div class="header-post">
             <h3 class="post-title">{{ props.title }}</h3>
-            <span class="post-date">{{ props.date }}</span>
+            <span class="post-date">Postado em {{ props.date }}</span>
         </div>
 
         <div class="text-wrap" :class="{ expanded: isExpanded }" ref="textWrapref">
@@ -41,24 +41,25 @@ function toggle() {
 <style scoped>
 .card {
     background-color: white;
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(161, 161, 161, 0.5);
 }
 
 .header-post {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
     margin-bottom: 1rem;
+    gap: 0.8rem;
 
     & .post-title {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         font-weight: bold;
     }
 
     & .post-date {
-        font-size: 1rem;
+        font-size: 0.9rem;
         color: #969696;
     }
 }
@@ -101,5 +102,12 @@ function toggle() {
     outline: none;
     cursor: pointer;
     font-weight: 600;
+}
+
+.img-post {
+    width: 100%;
+    height: auto;
+    margin-top: 1rem;
+    border-radius: 10px;
 }
 </style>
