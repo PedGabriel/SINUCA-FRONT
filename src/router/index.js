@@ -38,6 +38,11 @@ const router = createRouter({
       component: () => import('../views/WelcomeView.vue')
     },
     {
+      path: "/mural",
+      name: "mural", 
+      component: () => import('../views/BoardView.vue')
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import('../views/LoginView.vue')
@@ -58,6 +63,7 @@ const router = createRouter({
     {
       path: '/mural',
       name: 'mural',
+      component: () => import('../views/BoardView.vue')
     },
     {
       path: '/p',
