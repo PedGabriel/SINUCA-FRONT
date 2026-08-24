@@ -11,28 +11,42 @@ import NavigationComponent from '@/components/delegation/NavigationComponent.vue
 import TasksListComponent from '@/components/delegation/TasksListComponent.vue';
 import CreatTaskModal from '@/components/delegation/modais/CreatTaskModal.vue';
 import AppTabFooter from '@/components/layout/mobile/AppTabFooter.vue';
+import ScheduleListComponent from '@/components/delegation/ScheduleListComponent.vue';
+import ScheduleModal from '@/components/delegation/modais/ScheduleModal.vue';
 
 const countryStore = useCountryStore();
 const userStore = useUserStore();
 const countryId = ref();
 
+const activeTab = ref(0);
+
 const router = useRouter();
 const route = useRoute();
-const activeModal = ref(null);
+const activeModal = ref("");
+const selectedScheduleId = ref(null)
 
 const openTaskForm = () => {
     activeModal.value = 'form-tarefa'
     router.push('/delegacao/nova-tarefa')
 };
 
+const openScheduleModal = (id) => {
+    selectedScheduleId.value = id
+    activeModal.value = 'schedule-details'
+    router.push(`/delegacao/schedule/${id}`)
+}
+
 const closeModal = () => {
     activeModal.value = null
+    selectedScheduleId.value = null
     router.push('/delegacao')
 };
 
 const checkModalRoute = () => {
     if (route.path.includes('/delegacao/nova-tarefa') || route.path.includes('/editar')) {
         activeModal.value = 'form-tarefa';
+    } else if (route.path.includes('/delegacao/schedule/')) {
+        activeModal.value = 'schedule-details';
     } else {
         activeModal.value = null;
     }
@@ -61,15 +75,28 @@ onMounted (() => {
             :subtitle="countryStore.country?.political_name"
             :-country-flag-url="countryStore.country?.flag?.url"
         />
-        <NavigationComponent />
-        <TasksListComponent 
+        <NavigationComponent 
+            @change-tab="activeTab = $event"
+        />
+        
+        <TasksListComponent v-if="activeTab === 0"
             @open-form="openTaskForm"
         />
+        <ScheduleListComponent v-if="activeTab === 1" 
+            @open-details="openScheduleModal"
+        />
+
 
         <!-- MODAL -->
 
         <CreatTaskModal  
             v-if="activeModal === 'form-tarefa'"
+            @close="closeModal"
+        />
+
+        <ScheduleModal
+            v-if="activeModal === 'schedule-details'"
+            :schedule-id="selectedScheduleId"
             @close="closeModal"
         />
     </main>
