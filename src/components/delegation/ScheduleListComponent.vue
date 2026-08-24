@@ -33,7 +33,7 @@ function openSchedule(scheduleId) {
       <h4 style="font-weight: bolder; font-size: 1.2rem; margin-bottom: 1.5rem;">Cronograma</h4>
     </div>
     <ul>
-      <li v-for="s in scheduleStore.schedules" :key="s.id" class="schedule-item" @click="openSchedule(s.id)">
+      <li v-for="s in scheduleStore.schedules" :key="s.id" class="schedule-item" @click="openSchedule(String(s.id))">
         <div class="header-schedule">
         
           <span style="color: #969696;" v-if="s.category == '1'" class="mdi mdi-instagram">

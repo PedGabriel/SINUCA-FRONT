@@ -22,7 +22,7 @@ const activeTab = ref(0);
 
 const router = useRouter();
 const route = useRoute();
-const activeModal = ref(null);
+const activeModal = ref("");
 const selectedScheduleId = ref(null)
 
 const openTaskForm = () => {
