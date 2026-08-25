@@ -58,7 +58,7 @@ watch(
   () => props.scheduleId,
   async () => {
     await loadSchedule()
-  }
+  },
 )
 
 const nameCategory = computed(() => {
@@ -86,7 +86,7 @@ onUnmounted(() => {
   <section
     v-if="scheduleStore.schedule.category == 1"
     class="modal"
-    style="border-top: #FD151B solid 1.8rem"
+    style="border-top: #fd151b solid 1.8rem"
   >
     <div class="header">
       <div class="title">
@@ -97,13 +97,39 @@ onUnmounted(() => {
           @click="emits('close')"
         ></span>
       </div>
-      <div class="topic">
+    </div>
+    <div class="topic">
       <h4>Tema da postagem</h4>
       <h3>
         {{ scheduleStore.schedule.title }}
       </h3>
     </div>
-    
+
+    <div class="uldiv">
+      <ul class="schedules-infos">
+        <li>
+          <span class="mdi mdi-calendar-month-outline"></span>
+          {{ formatDate(scheduleStore.schedule.startDate) }}
+        </li>
+        <li>
+          <span class="mdi mdi-calendar-month-outline"></span>
+          {{ formatDate(scheduleStore.schedule.endDate) }}
+        </li>
+      </ul>
+    </div>
+    <div class="descricao">
+      <h3>Sobre a postagem</h3>
+      <p>
+        {{ scheduleStore.schedule.description }}
+      </p>
+    </div>
+    <div class="docs">
+      <h3><span class="mdi mdi-file-document-outline"></span> Documentos relacionados</h3>
+      <div>
+        <a v-for="link in linkStore.links" :key="link.id" :href="link.url" target="_blank">{{
+          link.url
+        }}</a>
+      </div>
     </div>
   </section>
   <section
@@ -183,7 +209,7 @@ onUnmounted(() => {
     class="modal"
     style="border-top: #849324 solid 1.8rem"
   >
-  <div class="header">
+    <div class="header">
       <div class="title">
         <h2>Mesa de cooperação</h2>
         <span
@@ -193,13 +219,50 @@ onUnmounted(() => {
         ></span>
       </div>
       <div class="topic">
-      <h4>Tema da mesa de cooperação</h4>
-      <h3>
-        {{ scheduleStore.schedule.title }}
-      </h3>
+        <h4>Tema da mesa de cooperação</h4>
+        <h3>
+          {{ scheduleStore.schedule.title }}
+        </h3>
+      </div>
     </div>
+
+    <div class="uldiv">
+      <ul class="schedules-infos">
+        <li>
+          <span class="mdi mdi-calendar-month-outline"></span>
+          {{ formatDate(scheduleStore.schedule.startDate) }}
+        </li>
+        <li>
+          <span class="mdi mdi-map-marker-outline"></span>
+          {{ scheduleStore.schedule.location }}
+        </li>
+        <li>
+          <span class="mdi mdi-clock-outline"></span>
+          {{ formatTime(scheduleStore.schedule.startDate) }}
+        </li>
+        <li>
+          <span class="mdi mdi-clock-outline"></span>
+          {{ formatTime(scheduleStore.schedule.endDate) }}
+        </li>
+      </ul>
     </div>
-    </section>
+
+    <div class="descricao">
+      <h3>Sobre a mesa de cooperação</h3>
+      <p>
+        {{ scheduleStore.schedule.description }}
+      </p>
+    </div>
+
+    <div class="docs">
+      <h3><span class="mdi mdi-file-document-outline"></span> Documentos relacionados</h3>
+      <div>
+        <a v-for="link in linkStore.links" :key="link.id" :href="link.url" target="_blank">{{
+          link.url
+        }}</a>
+      </div>
+    </div>
+  </section>
 </template>
 
 <style scoped>
