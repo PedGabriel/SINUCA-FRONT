@@ -1,24 +1,31 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-import { useUserStore } from '@/stores/userStore';
-import { useCountryStore } from '@/stores/countryStore';
+import { useUserStore } from '../stores/userStore';
+import { useCountryStore } from '../stores/countryStore';
+import { useDelegationTabs } from '../composables/useDelegationTabs';
 
-
-import AppHeaderMob from '@/components/layout/mobile/AppHeaderMob.vue';
-import BannerComponent from '@/components/layout/BannerComponent.vue';
-import NavigationComponent from '@/components/delegation/NavigationComponent.vue';
-import TasksListComponent from '@/components/delegation/TasksListComponent.vue';
-import CreatTaskModal from '@/components/delegation/modais/CreatTaskModal.vue';
-import AppTabFooter from '@/components/layout/mobile/AppTabFooter.vue';
-import ScheduleListComponent from '@/components/delegation/ScheduleListComponent.vue';
-import ScheduleModal from '@/components/delegation/modais/ScheduleModal.vue';
+// AppLayout substitui AppHeaderMob + AppTabFooter (e adiciona a sidebar desktop)
+import AppLayout from '../components/layout/AppLayout.vue';
+import BannerComponent from '../components/layout/BannerComponent.vue';
+import NavigationComponent from '../components/delegation/NavigationComponent.vue';
+import TasksListComponent from '../components/delegation/TasksListComponent.vue';
+import CreatTaskModal from '../components/delegation/modais/CreatTaskModal.vue';
+import ScheduleListComponent from '../components/delegation/ScheduleListComponent.vue';
+import ScheduleModal from '../components/delegation/modais/ScheduleModal.vue';
 
 const countryStore = useCountryStore();
 const userStore = useUserStore();
 const countryId = ref();
 
-const activeTab = ref(0);
+// Cópia local do país da delegação. O ScheduleModal chama
+// countryStore.getCountry() para os países do debate, o que sobrescreve
+// countryStore.country — sem esta cópia o banner passaria a mostrar
+// o país adversário depois de abrir um debate.
+const delegationCountry = ref(null);
+
+// Aba ativa compartilhada com a sidebar (desktop)
+const { activeTab } = useDelegationTabs();
 
 const router = useRouter();
 const route = useRoute();
@@ -59,49 +66,46 @@ watch(
     }
 );
 
-onMounted (() => {
+onMounted (async () => {
     countryId.value = userStore.user.country.id
-    countryStore.getCountry(countryId.value)
+    await countryStore.getCountry(countryId.value)
+    delegationCountry.value = { ...countryStore.country }
 
     checkModalRoute()
 });
 </script>
 
 <template>
-    <AppHeaderMob title="Delegação"/>
-    <main>
-        <BannerComponent 
-            :title="countryStore.country?.name"
-            :subtitle="countryStore.country?.political_name"
-            :-country-flag-url="countryStore.country?.flag?.url"
-        />
-        <NavigationComponent 
-            @change-tab="activeTab = $event"
-        />
-        
-        <TasksListComponent v-if="activeTab === 0"
-            @open-form="openTaskForm"
-        />
-        <ScheduleListComponent v-if="activeTab === 1" 
-            @open-details="openScheduleModal"
-        />
+    <AppLayout title="Delegação">
+        <main>
+            <BannerComponent 
+                :title="delegationCountry?.name"
+                :subtitle="delegationCountry?.political_name"
+                :-country-flag-url="delegationCountry?.flag?.url"
+            />
+            <NavigationComponent />
+            
+            <TasksListComponent v-if="activeTab === 0"
+                @open-form="openTaskForm"
+            />
+            <ScheduleListComponent v-if="activeTab === 1" 
+                @open-details="openScheduleModal"
+            />
 
+            <!-- MODAL -->
 
-        <!-- MODAL -->
+            <CreatTaskModal  
+                v-if="activeModal === 'form-tarefa'"
+                @close="closeModal"
+            />
 
-        <CreatTaskModal  
-            v-if="activeModal === 'form-tarefa'"
-            @close="closeModal"
-        />
-
-        <ScheduleModal
-            v-if="activeModal === 'schedule-details'"
-            :schedule-id="selectedScheduleId"
-            @close="closeModal"
-        />
-    </main>
-    <AppTabFooter 
-    />
+            <ScheduleModal
+                v-if="activeModal === 'schedule-details'"
+                :schedule-id="selectedScheduleId"
+                @close="closeModal"
+            />
+        </main>
+    </AppLayout>
 </template>
 
 <style scoped>
@@ -111,4 +115,13 @@ main {
     gap: 2rem;
 }
 
+/* No desktop o espaçamento é dado pelo AppLayout; zera paddings globais do <main> */
+@media (min-width: 1024px) {
+    main {
+        padding: 0;
+        gap: 2.5rem;
+        margin: 0 2rem;
+    }
+    
+}
 </style>
