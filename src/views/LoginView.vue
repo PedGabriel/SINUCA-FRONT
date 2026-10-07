@@ -53,21 +53,19 @@ async function login() {
             <button @click="router.back()" class="back-btn">
                 <span class="mdi mdi-arrow-left-thin"></span>
             </button>
-            <img :src="LogoAzul" alt="logo do SINUCA azul" style="width: auto; height: 40px">
+            <img :src="LogoAzul" alt="logo do SINUCA azul" class="imagemLogo">
         </header>
+
         <section class="login-section">
-    
-            <div class="section-title">
-                <h1>ENTRAR</h1>
-                <p>Entre com suas credenciais.</p>
-            </div>
-    
+
+            <h1 class="login-title">ENTRAR</h1>
+
             <div class="login-area">
                 <div class="header-login" :style="`color: ${userColor}`">
                     <span :class="userIcon"></span>
                     <h2>{{ userType }}</h2>
                 </div>
-    
+
                 <form @submit.prevent="login" class="login-form" >
                     <AppInput
                         v-model="email" 
@@ -96,12 +94,21 @@ async function login() {
                     </RouterLink>
                 </form>
             </div>
+
+            <p class="login-subtitle">Entre com suas credenciais.</p>
+
         </section>
+
         <img :src="odsShape" alt="ods shape" class="overlay-ods">
     </div>
 </template>
 
 <style scoped>
+.imagemLogo {
+    height: 40px;
+    width: auto;
+}
+
 .container {
     height: 100vh;
     position: relative;
@@ -114,6 +121,8 @@ async function login() {
     justify-content: space-between;
     align-items: center;
     margin-top: 1.5rem;
+    position: relative;
+    z-index: 2;
 }
 
 .back-btn {
@@ -122,14 +131,16 @@ async function login() {
     font-size: 2.5rem;
 }
 
-.section-title {
-    margin: 2rem 0;
+/* título separado do subtítulo para poder reordenar no desktop */
+.login-title {
     text-align: center;
+    margin: 2rem 0 1rem;
+}
 
-    & p {
-        margin-top: 1rem;
-        color: #969696;
-    }   
+.login-subtitle {
+    text-align: center;
+    color: #969696;
+    margin-bottom: 2rem;
 }
 
 .login-section {
@@ -137,7 +148,14 @@ async function login() {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
+    z-index: 2;
 }
+
+/* ordem mobile: título > subtítulo > card */
+.login-title { order: 1; }
+.login-subtitle { order: 2; }
+.login-area { order: 3; }
 
 .login-area {
     background-color: white;
@@ -183,6 +201,7 @@ async function login() {
     height: 250px;
     width: auto;
     transform: translate(-50%, 90px) rotate(90deg);
+    z-index: 1;
 }
 
 .error-message {
@@ -194,5 +213,80 @@ a {
     margin-top: 1rem;
     color: #437F97;
     text-decoration: underline;
+}
+
+
+/* ===================== DESKTOP ===================== */
+@media (min-width: 768px) {
+
+    .container {
+        height: auto;
+        min-height: 100vh;
+        padding: 0 4rem;
+        background-color: #F6F6F2; /* lado creme */
+    }
+
+    /* fundo diagonal, substitui o ods-shape como elemento decorativo principal */
+    .container::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-color: #01295F; /* lado azul-marinho */
+        clip-path: polygon(48% 0, 100% 0, 100% 100%, 12% 100%);
+        z-index: 0;
+    }
+
+    /* o ods-shape some no desktop, quem faz o recorte agora é o ::before */
+    .overlay-ods {
+        display: none;
+    }
+
+    .header-section {
+        justify-content: flex-start;
+        margin-top: 2.5rem;
+    }
+
+    /* botão de voltar não aparece no design desktop */
+    .back-btn {
+        display: none;
+    }
+
+    .login-section {
+        height: auto;
+        min-height: 80vh;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-title {
+        text-align: left;
+        color: #01295F;
+        font-size: 2.5rem;
+        margin: 0 5rem 1.5rem 0;
+        max-width: 600px;
+        width: 100%;
+        align-items: left;
+    }
+
+    .login-area {
+        width: 100%;
+        max-width: 600px;
+        padding: 3rem;
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* reordena: título > card > subtítulo */
+    .login-title { order: 1; }
+    .login-area { order: 2; }
+    .login-subtitle {
+        order: 3;
+        color: #fff;
+        font-weight: 600;
+        margin-top: 2rem;
+    }
+
+    .imagemLogo {
+        height: 80px;
+    }
 }
 </style>

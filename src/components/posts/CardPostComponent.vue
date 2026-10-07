@@ -110,4 +110,42 @@ function toggle() {
     margin-top: 1rem;
     border-radius: 10px;
 }
+
+@media (min-width: 1024px) {
+    .card {
+        padding: 2.5rem;
+    }
+
+    .header-post {
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 1.2rem;
+    }
+
+    .header-post .post-title {
+        font-size: 1.3rem;
+    }
+
+    .header-post .post-date {
+        font-size: 0.95rem;
+    }
+
+    .text-wrap {
+        max-height: 110px;
+    }
+
+    .text-wrap.expanded {
+        max-height: 240px;
+    }
+
+    .post-desc {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    .img-post {
+        max-height: 420px;
+        object-fit: cover;
+    }
+}
 </style>

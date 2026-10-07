@@ -13,13 +13,14 @@ const props = defineProps({
 <template>
     <section class="banner">
         <div class="title-area">
-            <div style="display: flex; gap: 1rem; align-items: center;">
+            <div class="title-row">
                 <h2 class="title">{{ title }}</h2>
+                <span v-if="icon" :class="icon" class="title-icon"></span>
                 <img class="country-flag" v-if="CountryFlagUrl" :src="CountryFlagUrl" :alt="title">
             </div>
             <p class="subtitle">{{ subtitle }}</p>
         </div>
-        <img src="/static/ods-shape.svg" alt="ods-shape" style="width: auto; height: 160px;">
+        <img class="ods-shape" src="/static/ods-shape.svg" alt="ods-shape">
     </section>
 </template>
 
@@ -33,7 +34,6 @@ const props = defineProps({
 }
 
 .title-area {
-
     padding: 1em;
 
     & .title {
@@ -46,9 +46,60 @@ const props = defineProps({
     }
 }
 
+.title-row {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.title-icon {
+    font-size: 2rem;
+}
+
 .country-flag {
     width: 35px;
     height: auto;
 }
 
+.ods-shape {
+    width: auto;
+    height: 160px;
+}
+
+/* ---------- DESKTOP: título solto no fundo, sem card e sem ilustração ---------- */
+@media (min-width: 1024px) {
+    .banner {
+        background-color: transparent;
+        border-radius: 0;
+    }
+
+    .title-area {
+        padding: 0;
+    }
+
+    .title-area .title {
+        font-size: clamp(2.4rem, 3.4vw, 3.5rem);
+        line-height: 1.1;
+    }
+
+    .title-area .subtitle {
+        font-size: clamp(1.3rem, 2vw, 1.8rem);
+        font-weight: 500;
+        margin-top: 0.2rem;
+        color: #a0a0a0;
+    }
+
+    .country-flag {
+        width: clamp(34px, 3vw, 42px);
+    }
+
+    /* o Figma do Mural não mostra esse ícone no desktop */
+    .title-icon {
+        display: none;
+    }
+
+    .ods-shape {
+        display: none;
+    }
+}
 </style>

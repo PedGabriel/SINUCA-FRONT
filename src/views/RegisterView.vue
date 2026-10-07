@@ -85,6 +85,8 @@ const backStep = () => {
     justify-content: space-between;
     align-items: center;
     margin-top: 1.5rem;
+    position: relative;
+    z-index: 2;
 }
 
 .back-btn {
@@ -100,5 +102,37 @@ const backStep = () => {
     height: 250px;
     width: auto;
     transform: translate(-50%, 90px) rotate(90deg);
+    z-index: 1;
+}
+
+@media (min-width: 768px) {
+    .container {
+        height: auto;
+        min-height: 100vh;
+        padding: 0 4rem;
+        background-color: #F6F6F2;
+    }
+
+    .container::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-color: #01295F;
+        clip-path: polygon(48% 0, 100% 0, 100% 100%, 12% 100%);
+        z-index: 0;
+    }
+
+    .overlay-ods {
+        display: none;
+    }
+
+    .header-section {
+        justify-content: flex-start;
+        margin-top: 2.5rem;
+    }
+
+    .back-btn {
+        display: none;
+    }
 }
 </style>
