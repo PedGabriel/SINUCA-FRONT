@@ -77,13 +77,21 @@ router.beforeEach(async (to) => {
     await authStore.checkAuth();
   };
 
+  if (to.name === 'home') {
+    if (authStore.loggedIn) {
+      return { name: 'Delegacao' };
+    } else {
+      return { name: 'mural' };
+    }
+  }
+
   if(authStore.loggedIn && (to.name === "login" || to.name === "bem-vindo")) {
     return { name: "home" };
   };
 
   if(to.name === "login") {
     const { title, icon, color } = to.query;
-    if(!title, !icon, !color) {
+    if(!title || !icon || !color) {
       return { name: 'bem-vindo' };
     }
   }
@@ -95,3 +103,4 @@ router.beforeEach(async (to) => {
 });
 
 export default router
+  

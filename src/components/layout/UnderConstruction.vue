@@ -17,7 +17,7 @@ defineProps({
 
 <template>
     <section class="under-construction">
-        <span class="mdi mdi-progress-wrench" :class="icon"></span>
+        <span class="{{ icon }}" :class="icon"></span>
         <h2 class="title">{{ title }}</h2>
         <p class="subtitle">{{ subtitle }}</p>
     </section>
@@ -30,12 +30,12 @@ defineProps({
     align-items: center;
     justify-content: center;
     text-align: center;
-    min-height: 60vh;
+    min-height: 40vh;
     padding: 2rem 1.5rem;
 }
 
 .icon {
-    font-size: 3.5rem;
+    font-size: 3rem;
     color: #01295f;
     margin-bottom: 1rem;
 }
@@ -53,11 +53,11 @@ defineProps({
 
 @media (min-width: 1024px) {
     .under-construction {
-        min-height: 70vh;
+        min-height: 60vh;
     }
 
     .icon {
-        font-size: 5rem;
+        font-size: 4rem;
     }
 
     .title {

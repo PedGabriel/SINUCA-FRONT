@@ -13,6 +13,8 @@ import TasksListComponent from '../components/delegation/TasksListComponent.vue'
 import CreatTaskModal from '../components/delegation/modais/CreatTaskModal.vue';
 import ScheduleListComponent from '../components/delegation/ScheduleListComponent.vue';
 import ScheduleModal from '../components/delegation/modais/ScheduleModal.vue';
+import DocumentsListComponent from '../components/delegation/DocumentsListComponent.vue';
+import NotesListComponent from '../components/delegation/NotesListComponent.vue';
 
 const countryStore = useCountryStore();
 const userStore = useUserStore();
@@ -88,8 +90,17 @@ onMounted (async () => {
             <TasksListComponent v-if="activeTab === 0"
                 @open-form="openTaskForm"
             />
+
             <ScheduleListComponent v-if="activeTab === 1" 
                 @open-details="openScheduleModal"
+            />
+
+            <DocumentsListComponent v-if="activeTab === 2" 
+
+            />
+
+            <NotesListComponent v-if="activeTab === 3" 
+            
             />
 
             <CreatTaskModal  
