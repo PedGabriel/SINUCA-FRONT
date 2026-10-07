@@ -1,8 +1,8 @@
 <script setup>
 import { onMounted } from 'vue';
 import { usePostStore } from '@/stores/postStore';
-import AppHeaderMob from '@/components/layout/mobile/AppHeaderMob.vue'
-import AppTabFooter from '@/components/layout/mobile/AppTabFooter.vue'
+import AppLayout from '@/components/layout/AppLayout.vue';
+import BannerComponent from '@/components/layout/BannerComponent.vue';
 import CardPostComponent from '@/components/posts/CardPostComponent.vue'
 
 const postStore = usePostStore();
@@ -17,62 +17,39 @@ const formatDate = (data) => {
     }).format(date)
 }
 
-
 onMounted(() => {
     postStore.getPosts();
 });
 </script>
+
 <template>
-    <AppHeaderMob title="Mural" />
-    <main>
-        <section class="banner">
-            <div class="section-name">
-                <div style="display: flex; gap: 1rem; align-items: center">
-                    <h2 class="name">Mural</h2>
-                    <span class="mdi mdi-bulletin-board"></span>
-                </div>
-                <p class="section-desc">Notícias Atualizadas sobre o SINUCA</p>
-            </div>
-            <img src="/static/ods-shape.svg" alt="ods-shape" style="width: auto; height: 160px" />
-        </section>
-
-        <section class="post-list">
-            <CardPostComponent 
-                v-for="post in postStore.posts"
-                :key="post.id"
-                :title="post.title"
-                :date="formatDate(post.created_at)"
-                :description="post.content"
-                :image-url="post.foto.url"
+    <AppLayout title="Mural">
+        <main>
+            <BannerComponent
+                title="Mural"
+                subtitle="Notícias Atualizadas sobre o SINUCA"
+                icon="mdi mdi-bulletin-board"
             />
-        </section>
-    </main>
-    <AppTabFooter />
+
+            <section class="post-list">
+                <CardPostComponent 
+                    v-for="post in postStore.posts"
+                    :key="post.id"
+                    :title="post.title"
+                    :date="formatDate(post.created_at)"
+                    :description="post.content"
+                    :image-url="post.foto.url"
+                />
+            </section>
+        </main>
+    </AppLayout>
 </template>
+
 <style scoped>
-.banner {
+main {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 10px;
-    background-color: #fff;
-}
-
-span {
-    font-size: 2rem;
-}
-
-.section-name {
-    padding: 1em;
-
-    & .name {
-        font-weight: bold;
-    }
-
-    & .section-desc {
-        color: #969696;
-        margin-top: 0.5rem;
-    }
+    flex-direction: column;
+    gap: 2rem;
 }
 
 .post-list {
@@ -80,5 +57,21 @@ span {
     flex-direction: column;
     gap: 1rem;
     margin-top: 2rem;
+}
+
+@media (min-width: 1024px) {
+    main {
+        padding: 0;
+        gap: 2.5rem;
+        margin-right: clamp(1rem, 2rem, 3rem);
+        margin-left: clamp(4rem, 6rem, 8rem);
+    }
+
+    .post-list {
+        max-width: 900px;
+        width: 100%;
+        margin: 2rem auto 0;
+        gap: 1.5rem;
+    }
 }
 </style>

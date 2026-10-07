@@ -92,8 +92,6 @@ onMounted (async () => {
                 @open-details="openScheduleModal"
             />
 
-            <!-- MODAL -->
-
             <CreatTaskModal  
                 v-if="activeModal === 'form-tarefa'"
                 @close="closeModal"
@@ -115,7 +113,7 @@ main {
     gap: 2rem;
 }
 
-/* No desktop o espaçamento é dado pelo AppLayout; zera paddings globais do <main> */
+
 @media (min-width: 1024px) {
     main {
         padding: 0;
