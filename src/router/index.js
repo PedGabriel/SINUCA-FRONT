@@ -8,7 +8,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView,
+      component: () => import('../views/BoardView.vue'),
     }, 
     {
       path: '/delegacao',
@@ -36,11 +36,6 @@ const router = createRouter({
       path: '/bem-vindo',
       name: 'bem-vindo',
       component: () => import('../views/WelcomeView.vue')
-    },
-    {
-      path: "/mural",
-      name: "mural", 
-      component: () => import('../views/BoardView.vue')
     },
     {
       path: '/login',
