@@ -15,6 +15,7 @@ const props = defineProps({
         <div class="title-area">
             <div class="title-row">
                 <h2 class="title">{{ title }}</h2>
+                <span v-if="icon" :class="icon" class="title-icon"></span>
                 <img class="country-flag" v-if="CountryFlagUrl" :src="CountryFlagUrl" :alt="title">
             </div>
             <p class="subtitle">{{ subtitle }}</p>
@@ -49,6 +50,10 @@ const props = defineProps({
     display: flex;
     gap: 1rem;
     align-items: center;
+}
+
+.title-icon {
+    font-size: 2rem;
 }
 
 .country-flag {
@@ -86,6 +91,11 @@ const props = defineProps({
 
     .country-flag {
         width: clamp(34px, 3vw, 42px);
+    }
+
+    /* o Figma do Mural não mostra esse ícone no desktop */
+    .title-icon {
+        display: none;
     }
 
     .ods-shape {
