@@ -48,7 +48,6 @@ async function register() {
   loading.value = true
   errorMessage.value = ''
 
-
   try {
     if(selectedFile.value) {
       const response = await userStore.uploadImage(selectedFile.value);
@@ -78,13 +77,11 @@ onMounted(() => {
 
 <template>
   <div class="container-component">
-    <div class="section-title">
-      <h1>QUASE LÁ!</h1>
-      <p>Complete suas informações para finalizar seu cadastro.</p>
-    </div>
+    <h1 class="step-title">QUASE LÁ!</h1>
+    <h1 class="step-title2">REGISTRO</h1>
+
 
     <div class="forms-container">
-
       <form @submit.prevent="register" class="forms">
         <div class="image-section">
           <label class="avatar">
@@ -140,32 +137,12 @@ onMounted(() => {
         <AppButton type="submit">CADASTRAR</AppButton>
       </form>
     </div>
+
+    <p class="step-subtitle">Complete suas informações para finalizar seu cadastro.</p>
   </div>
 </template>
 
 <style scoped>
-.section-title {
-  text-align: center;
-  margin-bottom: 2rem;
-
-  & p {
-    color: #969696;
-    margin-top: 1rem;
-  }
-}
-
-.forms-container {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-  padding: 2rem;
-}
-
-.forms {
-  display: flex;
-  flex-direction: column;
-}
-
 .container-component {
   height: 80vh;
   display: flex;
@@ -173,21 +150,35 @@ onMounted(() => {
   justify-content: center;
 }
 
-.forms-header {
+.step-title {
   text-align: center;
+  order: 1;  
   margin-bottom: 1rem;
-
-  & span {
-    font-size: 3rem;
-  }
-
-  & h2 {
-    font-weight: 600;
-    font-size: 1.7rem;
-    margin-top: 0.5rem;
-  }
 }
 
+.step-title2 {
+  display: none;
+}
+
+.forms-container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  padding: 2rem;
+  order: 3;
+}
+
+.step-subtitle {
+  text-align: center;
+  color: #969696;
+  margin-bottom: 2.5rem;
+  order: 2;
+}
+
+.forms {
+  display: flex;
+  flex-direction: column;
+}
 
 .image-section {
   display: flex;
@@ -258,6 +249,49 @@ onMounted(() => {
   transition: .4s;
 }
 
+@media (min-width: 768px) {
+  .container-component {
+    height: auto;
+    min-height: 85vh;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
 
+  .step-title {
+    display: none;
+  }
 
+  .forms-container {
+    width: 100%;
+    max-width: 600px;
+    padding: 3rem;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+    order: 2;
+  }
+
+  .step-subtitle {
+    color: #fff;
+    font-weight: 600;
+    margin-top: 2rem;
+    order: 3;
+  }
+
+  .avatar {
+    width: 140px;
+    height: 140px;
+  }
+
+  .step-title2 {
+    text-align: left;
+    color: #01295F;
+    font-size: 2.5rem;
+    max-width: 680px;
+    width: 100%;
+    margin: 0 0 1.5rem;
+    order: 1;
+    display: block;
+  }
+}
 </style>

@@ -93,7 +93,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <main>
+  <Teleport to="body">
+  <main class="task-modal">
     <div class="background" @click="emits('close')"></div>
     <section class="form-create">
       <div class="header-section">
@@ -195,6 +196,7 @@ onUnmounted(() => {
       </form>
     </section>
   </main>
+  </Teleport>
 </template>
 
 <style scoped>
@@ -203,6 +205,7 @@ onUnmounted(() => {
   gap: 10px;
   flex-wrap: wrap;
 }
+
 .status-option {
   display: flex;
   align-items: center;
@@ -214,15 +217,18 @@ onUnmounted(() => {
   transition: 0.2s;
   font-size: 0.9rem;
 }
+
 .status-dot {
   width: 10px;
   height: 10px;
   border-radius: 50%;
 }
+
 .selectedStatus {
   background-color: #f7f9fc;
   font-weight: 500;
 }
+
 .background {
   position: fixed;
   z-index: 10;
@@ -233,6 +239,7 @@ onUnmounted(() => {
   height: 100vh;
   width: 100%;
 }
+
 .form-create {
   z-index: 20;
   position: fixed;
@@ -246,11 +253,13 @@ onUnmounted(() => {
   border-radius: 15px 15px 0 0;
   box-shadow: 0 -2px 6px rgba(161, 161, 161, 0.1);
 }
+
 .date-row {
   display: flex;
   gap: 12px;
   margin-top: 1rem;
 }
+
 .header-section {
   display: flex;
   align-items: center;
@@ -258,23 +267,27 @@ onUnmounted(() => {
   margin-bottom: 2rem;
   cursor: pointer;
 }
+
 .label-class {
   display: block;
   margin-bottom: 10px;
   font-size: 1.2rem;
   font-weight: 500;
 }
+
 .task-form {
   display: flex;
   flex-direction: column;
   overflow: visible;
 }
+
 .categories {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
   margin-bottom: 1rem;
 }
+
 .category-option {
   border: 1px solid #969696;
   border-radius: 15px;
@@ -282,11 +295,13 @@ onUnmounted(() => {
   padding: 8px 12px;
   cursor: pointer;
 }
+
 .active {
   border: none;
   color: white;
   font-weight: 500;
 }
+
 .text-area-class {
   box-sizing: border-box;
   border: 2px solid #d9d9d9;
@@ -298,16 +313,19 @@ onUnmounted(() => {
   transition: all 0.3s;
   margin-bottom: 1rem;
 }
+
 .text-area-class:focus {
   outline: none;
   border: 2px solid #01295f;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
+
 .user-select {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
+
 .user-option {
   display: flex;
   align-items: center;
@@ -318,6 +336,7 @@ onUnmounted(() => {
   cursor: pointer;
   transition: 0.2s;
 }
+
 .user-option img {
   width: 25px;
   height: 25px;
@@ -325,19 +344,24 @@ onUnmounted(() => {
   object-fit: cover;
   border: 2px solid #01295f;
 }
+
 .user-option span {
   font-size: 0.95rem;
 }
+
 .selected {
   border-color: #01295f;
   background-color: #e6eef8;
 }
+
 .selected span {
   font-weight: 500;
 }
+
 .selected img {
   border-color: #01295f;
 }
+
 .notification-area {
   display: flex;
   justify-content: space-between;
@@ -350,24 +374,29 @@ onUnmounted(() => {
   margin-bottom: 1rem;
   transition: all 0.3s;
 }
+
 .title-area {
   display: flex;
   align-items: center;
 }
+
 .title-area span {
   font-size: 1.8rem;
   margin: 0 1rem;
   color: #969696;
 }
+
 .title-area p {
   color: #969696;
   font-size: 0.9rem;
   margin-top: 0.4rem;
 }
+
 .title-class {
   font-size: 1rem;
   font-weight: 500;
 }
+
 .active-notification {
   display: flex;
   width: 100%;
@@ -377,9 +406,11 @@ onUnmounted(() => {
   font-family: 'Poppins';
   margin-bottom: 1rem;
 }
+
 .active-notification span {
   color: #01295f;
 }
+
 .switch {
   position: relative;
   display: inline-block;
@@ -387,11 +418,13 @@ onUnmounted(() => {
   height: 25px;
   margin-right: 1rem;
 }
+
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
+
 .slider {
   position: absolute;
   cursor: pointer;
@@ -402,6 +435,7 @@ onUnmounted(() => {
   height: 100%;
   transition: 0.3s;
 }
+
 .slider::before {
   content: '';
   position: absolute;
@@ -413,11 +447,62 @@ onUnmounted(() => {
   border-radius: 50%;
   transition: 0.3s;
 }
+
 input:checked + .slider {
   background-color: #01295f;
 }
+
 input:checked + .slider::before {
   transform: translateX(25px);
   background-color: white;
 }
+.mdi-close {
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.mdi-close:active {
+  transform: scale(0.8);
+}
+
+@media (min-width: 1024px) {
+  .task-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+
+.background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.form-create {
+  z-index: 1;
+  position: absolute;
+
+  bottom: auto;
+  
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+/*left e top deixam as bordas esquerdas e superiores do elemento no centro da tela e o translete faz metade do elemento voltar, função que centraliza. usar futuramente*/
+
+  width: 50%;
+  height: 80%;
+
+  overflow-y: auto;
+  padding: 2rem 3rem;
+
+  background-color: #fff;
+  border-radius: 15px;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+}
+
 </style>

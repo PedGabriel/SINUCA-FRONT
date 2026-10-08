@@ -8,7 +8,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView,
+      component: () => import('../views/BoardView.vue'),
     }, 
     {
       path: '/delegacao',
@@ -38,11 +38,6 @@ const router = createRouter({
       component: () => import('../views/WelcomeView.vue')
     },
     {
-      path: "/mural",
-      name: "mural", 
-      component: () => import('../views/BoardView.vue')
-    },
-    {
       path: '/login',
       name: 'login',
       component: () => import('../views/LoginView.vue')
@@ -55,10 +50,12 @@ const router = createRouter({
     {
       path: '/chat',
       name: 'chat',
+      component: () => import('../views/ChatView.vue')
     },
     {
       path: '/historia',
       name: 'histora',
+      component: () => import('../views/HistoryView.vue')
     },
     {
       path: '/mural',
@@ -80,13 +77,21 @@ router.beforeEach(async (to) => {
     await authStore.checkAuth();
   };
 
+  if (to.name === 'home') {
+    if (authStore.loggedIn) {
+      return { name: 'Delegacao' };
+    } else {
+      return { name: 'mural' };
+    }
+  }
+
   if(authStore.loggedIn && (to.name === "login" || to.name === "bem-vindo")) {
     return { name: "home" };
   };
 
   if(to.name === "login") {
     const { title, icon, color } = to.query;
-    if(!title, !icon, !color) {
+    if(!title || !icon || !color) {
       return { name: 'bem-vindo' };
     }
   }
@@ -98,3 +103,4 @@ router.beforeEach(async (to) => {
 });
 
 export default router
+  

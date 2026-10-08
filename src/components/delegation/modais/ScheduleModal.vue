@@ -82,6 +82,8 @@ onUnmounted(() => {
 </script>
 
 <template>
+  <Teleport to="body">
+  <main class="schedule-modal">
   <div class="background" @click="emits('close')"></div>
   <section
     v-if="scheduleStore.schedule.category == 1"
@@ -325,6 +327,8 @@ onUnmounted(() => {
       </div>
     </div>
   </section>
+  </main>
+  </Teleport>
 </template>
 
 <style scoped>
@@ -437,5 +441,40 @@ div.docs h3 {
   font-size: 1.3rem;
   font-weight: 500;
   margin-bottom: 1rem;
+}
+
+.mdi-close {
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.mdi-close:active {
+  transform: scale(0.8);
+}
+
+@media (min-width: 1024px) {
+.background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.modal {
+  z-index: 1;
+  position: absolute;
+  width: 50%;
+  height: 80%;
+}
+
+.schedule-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
 }
 </style>

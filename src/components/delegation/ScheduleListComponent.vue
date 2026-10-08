@@ -30,7 +30,7 @@ function openSchedule(scheduleId) {
 <template>
   <section>
     <div class="header-section">
-      <h4 style="font-weight: bolder; font-size: 1.2rem; margin-bottom: 1.5rem;">Cronograma</h4>
+      <h4 style="font-weight: bolder; font-size: 1.5rem; margin-bottom: 1.5rem;">Cronograma</h4>
     </div>
     <ul>
       <li v-for="s in scheduleStore.schedules" :key="s.id" class="schedule-item" @click="openSchedule(String(s.id))">
@@ -53,7 +53,7 @@ function openSchedule(scheduleId) {
           </span>
 
           <p style="font-weight: 500">
-            <span class="mdi mdi-calendar-blank" style="font-size: 1.05rem"></span>
+            <span class="mdi mdi-calendar-blank" style="font-size: 1.05rem; white-space: nowrap;"></span>
             {{ formatDate(s.endDate) }}
           </p>
           
