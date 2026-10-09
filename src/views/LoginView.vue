@@ -289,4 +289,12 @@ a {
         height: 80px;
     }
 }
+@media (max-width: 767px) {
+  .container { height: auto; min-height: 100dvh; padding: 0 1rem 2rem; overflow: visible; }
+  .overlay-ods { display: none; }
+  .login-section { height: auto; min-height: 0; padding: 1.5rem 0; }
+  .login-area { width: 100%; padding: 1.25rem; }
+  .login-title { font-size: 2rem; line-height: 1.3; }
+  .login-subtitle { line-height: 1.5; }
+}
 </style>

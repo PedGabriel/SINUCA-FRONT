@@ -415,4 +415,11 @@ onMounted(() => {
         display: inline;
     }
 }
+@media (max-width: 1023px) {
+  .header-title { flex-wrap: wrap; gap: 0.75rem; }
+  .task-card { padding: 1.25rem; }
+  .task-categories { flex-wrap: wrap; gap: 0.5rem; }
+  .category-item { max-width: 100%; }
+  .task-card h3 { max-width: 100%; line-height: 1.5; }
+}
 </style>
